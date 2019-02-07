@@ -29,9 +29,13 @@ int			main(void)
         random = (char *)malloc(sizeof(char) * 640);
         i++;
     }
-  /*  ptr = (char *)malloc(sizeof(char) * 100);
+    ptr = (char *)malloc(sizeof(char) * 100);
+    ptrCrash = ptr + 1;
+    free(ptr);
+    printf("ca passe\n");
+    free(ptrCrash);
 //    ptrCrash = (char *)malloc(sizeof(char) * 5);
-    i = 0;
+/*    i = 0;
     while (i < 15)
     {
      //   ptrCrash[i] = 'b';
@@ -39,9 +43,8 @@ int			main(void)
         i++;
     }
     //ptrCrash[4] = '\0';
-    ptr[24] = '\0';
-    ft_putendl(ptr);
-    */
+    ptr[24] = '\0';*/
+    /*ft_putendl(ptr);
     //show_alloc_mem();
     //ft_putstr(ptrCrash);*/
 	return (0);

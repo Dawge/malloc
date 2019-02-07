@@ -14,15 +14,21 @@
 
 void        put_u16inu8(uint8_t *addr, uint16_t size)
 {
+    //printf("On ecrit size dans l'adresse 0X%lX\n", (unsigned long)addr);
     addr[0] = (uint8_t)(size >> 8);
     addr[1] = (uint8_t)(size);
+    //printf("add[0] = %d et add[1] = %d\n", addr[0], addr[1]);
 }
 
 uint16_t        read16in8(uint8_t *addr)
 {
     uint16_t    val;
 
-    val = ((uint16_t)addr[0] << 8) | ((uint16_t)addr[1]);
+    //printf("%d\n", addr[0]);
+    //printf("Lulz\n");
+    val = ((uint16_t)(addr[0] & 0b11) << 8);        //on masque le deuxime bit
+    //printf("Decembre\n");
+    val |= ((uint16_t)addr[1]);
     return (val);
 }
 
@@ -47,19 +53,21 @@ uint8_t    *creat_block_small(uint8_t *ptr, uint16_t size)
 
     put_size = (uint16_t *)ptr;
     *put_size += size + 2;
-    printf("hey voici la size header %lu -------- %lu\n", (unsigned long)*put_size, (unsigned long)size);
+    //printf("hey voici la size header %lu -------- %lu\n", (unsigned long)*put_size, (unsigned long)size);
     tmp = ptr + SIZE_HEADER;                               //first block size
     val = read16in8(tmp);
     while (val != 0)                            //parsing block
     {
         tmp += val + 2;
-        val = read16in8(tmp);
-        printf("addr ------- %lu & %lu\n", (unsigned long)tmp, (unsigned long)val);
+        //printf("En vie\n");
+        val = read16in8(tmp);// & 0x3ff);
+        //printf("addr ------- %lu & %lu\n", (unsigned long)tmp, (unsigned long)val);
     }
     //*tmp = size;
+    //printf("-->Size = %d\n", size);
     put_u16inu8(tmp, size);
     //printf("tmp size %lu\n", (unsigned long)*tmp);
-    return ((uint8_t*)(tmp + 1));
+    return ((uint8_t*)(tmp + 2));
 }
 
 
@@ -67,10 +75,10 @@ void        *creat_small(uint16_t size)
 {
     uint8_t     *area;
 
-    printf("Pas mieux\n");
+    //printf("Pas mieux\n");
     if (g_all_malloc.small == NULL)
     {
-        printf("Go\n");
+       // printf("Go\n");
         g_all_malloc.small = mmap(0, g_all_malloc.size_page * 16, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
         area = g_all_malloc.small;
         if (area == MAP_FAILED)
@@ -78,7 +86,7 @@ void        *creat_small(uint16_t size)
         creat_header((uint16_t*)area);
         area += SIZE_HEADER;
         put_u16inu8(area, size);
-        area++;
+        area += 2;
     }
     else if (check_small_size(size) == -1)
     {

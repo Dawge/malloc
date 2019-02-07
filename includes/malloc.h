@@ -42,5 +42,5 @@ void                write_next_area_addr(uint64_t next_addr, uint8_t *header);
 void                *creat_small(uint16_t size);
 uint64_t            read_size(uint8_t *addr);
 void                creat_header(uint16_t *ptr);
-
+uint16_t            read16in8(uint8_t *addr);
 #endif

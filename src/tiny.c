@@ -50,7 +50,6 @@ uint8_t        *creat_block(uint8_t *ptr, uint8_t size)
 
 uint8_t         *go_to_last_header(uint8_t *header)
 {
-    uint64_t    next;
     uint64_t    tmp;
     uint8_t     *addr;
 
@@ -59,7 +58,6 @@ uint8_t         *go_to_last_header(uint8_t *header)
     tmp = read_size(addr);
     while (tmp != 0)
     {
-        next = tmp;
         addr = (uint8_t *)tmp + 2;
         tmp = read_size(addr);
     }

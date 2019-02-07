@@ -26,14 +26,18 @@ void		*malloc(size_t size)
 {
     void    *ptr;
 
-    printf("Size = %d\n", size);
+    //printf("Size = %d\n", size);
     if (g_all_malloc.small_size == 0 || g_all_malloc.tiny_size == 0)
         init_global();
     if (size < g_all_malloc.tiny_size)
         ptr = creat_tiny((uint8_t)size);
    else if (size < g_all_malloc.small_size)
+   {
+        //printf("Bah oui\n");
         ptr = creat_small((uint16_t)size);
+    }
    else
         ;
+//    /printf("ADR = 0X%lX\n", (unsigned long)ptr);
     return (ptr);
 }

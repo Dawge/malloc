@@ -26,7 +26,7 @@ uint16_t        read16in8(uint8_t *addr)
 
     //printf("%d\n", addr[0]);
     //printf("Lulz\n");
-    val = ((uint16_t)(addr[0] & 0b11) << 8);        //on masque le deuxime bit
+    val = ((uint16_t)(addr[0] & 0b11) << 8);        //on masque le premier bit
     //printf("Decembre\n");
     val |= ((uint16_t)addr[1]);
     return (val);

@@ -22,14 +22,14 @@ int			main(void)
 
     i = 0;
     //printf("%llu %llu %llu\n", sizeof(size_t), sizeof(void *), sizeof(char));
-    while (i < 250)
+/*    while (i < 250)
     {
         //printf("lj hifhe;oiheiohio hfo;hf;oie whoihewoi ;hefoihe wiohfiowhio heifoh %d\n", i);
         //printf("%d\n", i);
         random = (char *)malloc(sizeof(char) * 640);
         i++;
-    }
-    ptr = (char *)malloc(sizeof(char) * 100);
+    }*/
+    ptr = (char *)malloc(sizeof(char) * 60);
     ptrCrash = ptr + 1;
     free(ptr);
     printf("ca passe\n");

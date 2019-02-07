@@ -53,22 +53,44 @@ int         is_allocated(uint8_t *addr)
         if ((uint64_t)current < (uint64_t)addr && (uint64_t)addr < tmp)
             return (look_addr(addr, current));
         tmp = read_size(current);
-
     }
     return (look_addr(current, addr));
+}
+
+void        clear_area(uint8_t *addr)
+{
+    int             i;
+    uint16_t        size;
+
+    i = 0;
+    size = read16in8(addr);
+    *(addr - 2) |= 0x80;
+    while (i < size)
+    {
+        addr[i] = 0;
+        i++;
+    }
 }
 
 void        free(void *ptr)
 {
     uint8_t     *addr;
 
+    if (!ptr)
+    {
+        printf("Pti batard\n");
+        exit(0);
+    }
     addr = (uint8_t*)ptr;
     printf("\n\n\nOn veux free 0X%lX\n", (unsigned long)(addr));
     if (is_allocated(addr) == 0)
     {
-        printf("Tu fous quoi abrutit !\n");
+        printf("Tu fous quoi abruti !\n");
         exit(0);
     }
     else
+    {
         printf("Tu peux free, fait toi plez\n");
+        clear_area(addr);
+    }
 }

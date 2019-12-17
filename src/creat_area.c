@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:17:28 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/17 21:58:45 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/17 22:37:13 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 static size_t		size_alloc(size_t size, int type)
 {
-	if (type == TINY)
-		return (TINY_SIZE * 100 / g_malloc.pagesz);
-	else if (type == SMALL)
-		return (SMALL_SIZE * 100 / g_malloc.pagesz);
-	else
+	if (type == LARGE)
 		return (size / g_malloc.pagesz + 1);
+	else
+		return (g_malloc.maxsz[type] / g_malloc.pagesz);
 }
 
 static void			*creat_header(void *ptr, size_t size, int type)

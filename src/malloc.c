@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:11:17 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/17 18:49:35 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/17 22:05:48 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void			align(size_t *size)
 
 void				*malloc(size_t size)
 {
+	init_global();
 	align(&size);
 	if (size <= TINY_SIZE)
 		return (handle_tiny(size));

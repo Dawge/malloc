@@ -6,7 +6,7 @@
 #    By: rostroh <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/17 11:17:25 by rostroh           #+#    #+#              #
-#    Updated: 2019/12/17 14:44:03 by rostroh          ###   ########.fr        #
+#    Updated: 2019/12/17 19:37:07 by rostroh          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ endif
 
 NAME = libft_malloc$(HOSTTYPE).so
 
-SRC = malloc.c
+SRC = malloc.c area.c creat_area.c tools.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -24,7 +24,6 @@ SRC_DIR = ./src
 OBJ_DIR = ./obj
 INC_DIR = ./include
 
-SRCS = $(SRC:%=$(SRC_DIR)/%)
 OBJS = $(OBJ:%=$(OBJ_DIR)/%)
 
 LIBFT = libft.a
@@ -32,9 +31,9 @@ LIB_DIR = ./libft
 LFT = $(LIB_DIR)/$(LIBFT)
 LIB = -L $(LIB_DIR) -l$(LIBFT:lib%.a=%)
 
-FLG = -Wall \
-	  -Werror \
-	  -Wextra
+OBJ_PATH = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
+
+FLG = -Wall -Werror -Wextra
 
 CC = gcc
 
@@ -42,20 +41,23 @@ all:
 	@make -C $(LIB_DIR)
 	@make $(NAME)
 
-$(OBJS): $(SRCS)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	gcc $(FLG) -I $(INC_DIR) -o $@ -c -fPIC $<
 	@echo "fin de compilation"
 
 $(NAME): $(OBJS)
 	@echo "creat lib"
-	$(CC) $(FLG) $< $(LFT) -shared -o $@ $(LIB)
+	$(CC) $(FLG) $(OBJS) $(LFT) -shared -o $@ $(LIB)
+	ln -fs $(NAME) libft_malloc.so
 
 clean:
 	@rm -rf $(OBJ_DIR)
+	@make $@ -C $(LIB_DIR)
 
 fclean:
 	@rm -rf $(NAME)
+	@make $@ -C $(LIB_DIR)
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/18 15:36:51 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/18 19:32:42 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,21 @@ typedef struct		s_malloc
 
 t_malloc			g_malloc;
 
+/*
+**		malloc.c
+*/
 void				*malloc(size_t size);
+int					get_type(size_t size);
+
+/*
+**		free.c
+*/
+void				free(void *ptr);
 
 /*
 **		area.c
 */
-void				*handle(size_t size, int type);/*
-void				*handle_tiny(size_t size);
-void				*handle_small(size_t size);
-void				*handle_large(size_t size);*/
+void				*handle(size_t size, int type);
 
 /*
 **		creat_area
@@ -73,15 +79,5 @@ void				*creat_area(size_t size, int type);
 void				ft_printaddr(uint8_t *ptr, int type);
 void				ft_strintout(const char *str, int nb);
 void				ft_strhexout(const char *str, uint64_t nb);
-/*
-**		write_memory
-*/
-void				write_uint16(uint8_t *ptr, uint16_t data);
-void				write_uint32(uint8_t *ptr, uint32_t data);
-void				write_uint64(uint8_t *ptr, uint64_t data);
 
-/*
-**		read_memory
-*/
-uint16_t			read_uint16(uint8_t *ptr, uint16_t data);
 #endif

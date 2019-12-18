@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:11:17 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/18 15:44:23 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/18 19:30:19 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void			align(size_t *size)
 	*size = val;
 }
 
-static int			get_type(size_t size)
+int					get_type(size_t size)
 {
 	if (size <= TINY_SIZE)
 		return (TINY);
@@ -55,6 +55,8 @@ void				*malloc(size_t size)
 {
 	void		*ptr;
 
+	if (size == 0)
+		return (NULL);
 	ft_strhexout("New malloc : ", (uint64_t)size);
 	if (g_init == 0)
 	{

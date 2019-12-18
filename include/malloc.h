@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/18 19:32:42 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/18 20:44:04 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define TINY 0
 # define SMALL 1
 # define LARGE 2
+# define NB_AREA 3
 
 # define TINY_SIZE 1024
 # define SMALL_SIZE 4096
@@ -34,18 +35,20 @@
 
 # define ALIGN_SIZE 16
 
+# define FREE_MASK 0x8000
+# define TINY_MASK 0x4000
+# define SMALL_MASK 0x2000
+
 # define VERBOSE 1
 # define DUMP 0
 
 typedef struct		s_malloc
 {
-	uint8_t			*ptr[3];
-	uint8_t			hdrsz[3];
-	uint8_t			mtdata[3];
-	uint32_t		maxsz[2];
-	/*uint8_t			*ptr_tiny;
-	uint8_t			*ptr_small;
-	uint8_t			*ptr_large;*/
+	uint8_t			*ptr[NB_AREA];
+	uint8_t			hdrsz[NB_AREA];
+	uint8_t			mtdata[NB_AREA];
+	uint32_t		mask[NB_AREA - 1];
+	uint32_t		maxsz[NB_AREA - 1];
 	unsigned int	nb_page;
 	size_t			pagesz;
 }					t_malloc;

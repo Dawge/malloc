@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:11:17 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/18 19:30:19 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/18 20:44:14 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void			init_global(void)
 	g_malloc.mtdata[LARGE] = META_LARGE;
 	g_malloc.maxsz[TINY] = (TINY_SIZE + META_DATA) * 100 + HEADER_SIZE;
 	g_malloc.maxsz[SMALL] = (SMALL_SIZE + META_DATA) * 100 + HEADER_SIZE;
+	g_malloc.mask[TINY] = TINY_MASK;
+	g_malloc.mask[SMALL] = SMALL_MASK;
 	g_malloc.nb_page = 0;
 	g_malloc.pagesz = getpagesize();
 }

@@ -1,0 +1,166 @@
+New malloc : 0x2E0
+First area
+map addr : 0x1095F2000
+map size : 0x1A000
+Page reclaims : 26
+header value : 0x2EC
+meta data : 0x2E0
+Size : 0x2E0
+0x1095F200E - 0x1095F22EE
+
+New malloc : 0x20
+SIZE IN AREA : 0x42EC
+old ptr = 0x1095F200C
+block size = 0x2E0
+end ptr = 0x1095F22EE
+ptr = 0x1095F22EE
+size = 0x20
+Size : 0x20
+0x1095F22F0 - 0x1095F2310
+
+New malloc : 0x20
+SIZE IN AREA : 0x430E
+old ptr = 0x1095F200C
+block size = 0x2E0
+old ptr = 0x1095F22EE
+block size = 0x4020
+end ptr = 0x1095F6310
+ptr = 0x1095F6310
+size = 0x20
+Size : 0x20
+0x1095F6312 - 0x1095F6332
+
+New malloc : 0x20
+SIZE IN AREA : 0x4330
+old ptr = 0x1095F200C
+block size = 0x2E0
+old ptr = 0x1095F22EE
+block size = 0x4020
+old ptr = 0x1095F6310
+block size = 0x4020
+end ptr = 0x1095FA332
+ptr = 0x1095FA332
+size = 0x20
+Size : 0x20
+0x1095FA334 - 0x1095FA354
+
+New malloc : 0x20
+SIZE IN AREA : 0x4352
+old ptr = 0x1095F200C
+block size = 0x2E0
+old ptr = 0x1095F22EE
+block size = 0x4020
+old ptr = 0x1095F6310
+block size = 0x4020
+old ptr = 0x1095FA332
+block size = 0x4020
+end ptr = 0x1095FE354
+ptr = 0x1095FE354
+size = 0x20
+Size : 0x20
+0x1095FE356 - 0x1095FE376
+
+New malloc : 0xF
+SIZE IN AREA : 0x4374
+old ptr = 0x1095F200C
+block size = 0x2E0
+old ptr = 0x1095F22EE
+block size = 0x4020
+old ptr = 0x1095F6310
+block size = 0x4020
+old ptr = 0x1095FA332
+block size = 0x4020
+old ptr = 0x1095FE354
+block size = 0x4020
+end ptr = 0x109602376
+ptr = 0x109602376
+size = 0x10
+Size : 0x10
+0x109602378 - 0x109602388
+
+New malloc : 0x2D
+SIZE IN AREA : 0x4386
+old ptr = 0x1095F200C
+block size = 0x2E0
+old ptr = 0x1095F22EE
+block size = 0x4020
+old ptr = 0x1095F6310
+block size = 0x4020
+old ptr = 0x1095FA332
+block size = 0x4020
+old ptr = 0x1095FE354
+block size = 0x4020
+old ptr = 0x109602376
+block size = 0x4010
+end ptr = 0x109606388
+ptr = 0x109606388
+size = 0x30
+Size : 0x30
+0x10960638A - 0x1096063BA
+
+New malloc : 0x90
+SIZE IN AREA : 0x43B8
+old ptr = 0x1095F200C
+block size = 0x2E0
+old ptr = 0x1095F22EE
+block size = 0x4020
+old ptr = 0x1095F6310
+block size = 0x4020
+old ptr = 0x1095FA332
+block size = 0x4020
+old ptr = 0x1095FE354
+block size = 0x4020
+old ptr = 0x109602376
+block size = 0x4010
+old ptr = 0x109606388
+block size = 0x4030
+end ptr = 0x10960A3BA
+ptr = 0x10960A3BA
+size = 0x90
+Size : 0x90
+0x10960A3BC - 0x10960A44C
+
+New malloc : 0x2D
+SIZE IN AREA : 0x444A
+old ptr = 0x1095F200C
+block size = 0x2E0
+old ptr = 0x1095F22EE
+block size = 0x4020
+old ptr = 0x1095F6310
+block size = 0x4020
+old ptr = 0x1095FA332
+block size = 0x4020
+old ptr = 0x1095FE354
+block size = 0x4020
+old ptr = 0x109602376
+block size = 0x4010
+old ptr = 0x109606388
+block size = 0x4030
+old ptr = 0x10960A3BA
+block size = 0x4090
+end ptr = 0x10960E44C
+ptr = 0x10960E44C
+size = 0x30
+Size : 0x30
+0x10960E44E - 0x10960E47E
+
+New malloc : 0x32
+SIZE IN AREA : 0x447C
+old ptr = 0x1095F200C
+block size = 0x2E0
+old ptr = 0x1095F22EE
+block size = 0x4020
+old ptr = 0x1095F6310
+block size = 0x4020
+old ptr = 0x1095FA332
+block size = 0x4020
+old ptr = 0x1095FE354
+block size = 0x4020
+old ptr = 0x109602376
+block size = 0x4010
+old ptr = 0x109606388
+block size = 0x4030
+old ptr = 0x10960A3BA
+block size = 0x4090
+old ptr = 0x10960E44C
+block size = 0x4030

@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:17:28 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/18 19:00:07 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/18 21:03:35 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void			*creat_header(void *ptr, size_t size, int type)
 	}
 	*((uint32_t*)ptr) += size + HEADER_SIZE;
 	ft_strhexout("header value : ", *((uint32_t*)ptr));
-	*((uint16_t*)(ptr + HEADER_SIZE)) = size;
-	ft_strhexout("meta data : ", *((uint16_t*)(ptr + HEADER_SIZE)));
+	*((uint16_t*)(ptr + HEADER_SIZE)) = size | g_malloc.mask[type];
+	ft_strhexout("meta data : ", *((uint16_t*)(ptr + HEADER_SIZE)) ^ g_malloc.mask[type]);
 	return (ptr);
 }
 

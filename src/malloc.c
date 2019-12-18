@@ -6,11 +6,13 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:11:17 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/17 22:35:38 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/18 15:44:23 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+
+int					g_init = 0;
 
 static void			init_global(void)
 {
@@ -39,15 +41,29 @@ static void			align(size_t *size)
 	*size = val;
 }
 
+static int			get_type(size_t size)
+{
+	if (size <= TINY_SIZE)
+		return (TINY);
+	else if (size <= SMALL_SIZE)
+		return (SMALL);
+	else
+		return (LARGE);
+}
+
 void				*malloc(size_t size)
 {
-	init_global();
+	void		*ptr;
+
+	ft_strhexout("New malloc : ", (uint64_t)size);
+	if (g_init == 0)
+	{
+		init_global();
+		g_init = 1;
+	}
 	align(&size);
-	if (size <= TINY_SIZE)
-		return (handle_tiny(size));
-	else if (size <= SMALL_SIZE)
-		return (handle_small(size));
-	else
-		return (handle_large(size));
-	return (NULL);
+	ptr = handle(size, get_type(size));
+	if (VERBOSE == 1)
+		ft_printaddr(ptr, get_type(size));
+	return (ptr);
 }

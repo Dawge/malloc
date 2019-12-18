@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:48:08 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/17 18:57:47 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/18 15:41:09 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void			ft_puthex(uint64_t nb)
 
 	i = 0;
 	j = 0;
+	ft_putstr("0x");
 	if (nb == 0)
 		ft_putchar('0');
 	while (nb > 0)
@@ -38,7 +39,6 @@ void			ft_puthex(uint64_t nb)
 		i++;
 	}
 	i--;
-	ft_putstr("0x");
 	while (i >= 0)
 	{
 		tmp[j] = buf[i];
@@ -60,4 +60,27 @@ void			ft_strhexout(const char *str, uint64_t nb)
 	ft_putstr(str);
 	ft_puthex(nb);
 	ft_putchar('\n');
+}
+
+void			ft_printaddr(uint8_t *ptr, int type)
+{
+	uint16_t	ptrsz;
+	uint64_t	largesz;
+
+	if (type == LARGE)
+	{
+		largesz = *((uint64_t*)(ptr - HEADER_LARGE));
+		ft_strhexout("Size : ", largesz);
+		ft_puthex((uint64_t)ptr);
+		ft_strhexout(" - ", (uint64_t)(ptr + largesz));
+		ft_putchar('\n');
+	}
+	else
+	{
+		ptrsz = *((uint16_t*)(ptr - META_DATA));
+		ft_strhexout("Size : ", ptrsz);
+		ft_puthex((uint64_t)ptr);
+		ft_strhexout(" - ", (uint64_t)(ptr + ptrsz));
+		ft_putchar('\n');
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/17 22:34:33 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/18 15:36:51 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
 
 # define ALIGN_SIZE 16
 
-# define VERBOSE 0
+# define VERBOSE 1
+# define DUMP 0
 
 typedef struct		s_malloc
 {
@@ -56,9 +57,10 @@ void				*malloc(size_t size);
 /*
 **		area.c
 */
+void				*handle(size_t size, int type);/*
 void				*handle_tiny(size_t size);
 void				*handle_small(size_t size);
-void				*handle_large(size_t size);
+void				*handle_large(size_t size);*/
 
 /*
 **		creat_area
@@ -68,9 +70,9 @@ void				*creat_area(size_t size, int type);
 /*
 **		tools.c
 */
+void				ft_printaddr(uint8_t *ptr, int type);
 void				ft_strintout(const char *str, int nb);
 void				ft_strhexout(const char *str, uint64_t nb);
-
 /*
 **		write_memory
 */

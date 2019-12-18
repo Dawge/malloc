@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:44:19 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/18 16:20:35 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/18 16:38:21 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ static uint8_t		*go_last_area(int type, size_t size, int *full)
 	uint64_t	res;
 
 	ptr = g_malloc.ptr[type];
-	res = *((uint64_t*)(ptr + g_malloc.hdrsz[type]));
-	if (res == 0)
-		ft_putstr("Ouf\n");
+	ft_putstr("debug\n");
+	res = *((uint64_t*)(ptr + SIZE_AREA));
+	ft_putstr("debug2\n");
 	while (res != 0)
 	{
 		if ((*full = is_full(ptr, size, type)) == 0)
 			return (ptr);
 		ptr = (uint8_t*)res;
-		res = *((uint64_t*)(ptr + g_malloc.hdrsz[type]));
+		res = *((uint64_t*)(ptr + SIZE_AREA));
 	}
 	*full = is_full(ptr, size, type);
 	return (ptr);

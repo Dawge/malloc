@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:11:17 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/19 15:25:57 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/19 18:27:12 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void				*malloc(size_t size)
 		g_init = 1;
 	}
 	align(&size);
+	ft_strhexout("Allign size : ", (uint64_t)size);
 	ptr = handle(size, get_type(size));
 	if (VERBOSE == 1)
 		ft_printaddr(ptr, get_type(size));

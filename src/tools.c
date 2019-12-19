@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:48:08 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/19 17:59:24 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/19 18:30:22 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			ft_printaddr(uint8_t *ptr, int type)
 
 	if (type == LARGE)
 	{
-		largesz = *((uint64_t*)(ptr - HEADER_LARGE)) ^ g_malloc.mask[type];
+		largesz = *((uint64_t*)(ptr - HEADER_LARGE));
 		ft_strhexout("Size : ", largesz);
 		ft_puthex((uint64_t)ptr);
 		ft_strhexout(" - ", (uint64_t)(ptr + largesz));

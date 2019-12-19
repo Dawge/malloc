@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:11:17 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/18 20:44:14 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/19 15:25:57 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void			align(size_t *size)
 	*size = val;
 }
 
-int					get_type(size_t size)
+static int			get_type(size_t size)
 {
 	if (size <= TINY_SIZE)
 		return (TINY);

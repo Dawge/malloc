@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/18 20:44:04 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/19 18:01:29 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define TINY 0
 # define SMALL 1
 # define LARGE 2
+# define ERROR 0xff
 # define NB_AREA 3
 
 # define TINY_SIZE 1024
@@ -38,6 +39,7 @@
 # define FREE_MASK 0x8000
 # define TINY_MASK 0x4000
 # define SMALL_MASK 0x2000
+# define IGNORE_FIRST 0x7FFF
 
 # define VERBOSE 1
 # define DUMP 0
@@ -59,7 +61,6 @@ t_malloc			g_malloc;
 **		malloc.c
 */
 void				*malloc(size_t size);
-int					get_type(size_t size);
 
 /*
 **		free.c
@@ -72,10 +73,14 @@ void				free(void *ptr);
 void				*handle(size_t size, int type);
 
 /*
-**		creat_area
+**		creat_area.c
 */
 void				*creat_area(size_t size, int type);
 
+/*
+**		release.c
+*/
+int					free_zone(void *pool, void *ptr, int type);
 /*
 **		tools.c
 */

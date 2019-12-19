@@ -6,36 +6,79 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/18 20:59:29 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/19 17:46:45 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-void			*check_area(uint8_t *ptr, uint8_t *to_find)
+static int		get_type(void *ptr)
 {
-	uint64_t	size_area;
+	int			res;
 
-
+	if ((uint64_t)ptr < META_DATA)
+		return (ERROR);
+	res = *((uint16_t *)(ptr - META_DATA));
+	if ((res & TINY_MASK) == TINY_MASK)
+		return (TINY);
+	if ((res & SMALL_MASK) == SMALL_MASK)
+		return (SMALL);
+	return (LARGE);
 }
 
-void			*find_ptr(void *to_find)
+static int		find_ptr(void *pool, void *to_find, int type)
 {
-	int			i;
-	uint8_t		*ptr;
+	void		*ptr;
+	uint16_t	size;
 
-	i = 0;
-	while (i < NB_AREA)
+	ptr = pool + g_malloc.hdrsz[type];
+	size = *((uint16_t *)ptr) ^ g_malloc.mask[type] ^ FREE_MASK;
+	while (size != 0)
 	{
-		if ((ptr = check_area(g_malloc.ptr[i], to_find)) != NULL)
-			return (ptr);
-		i++;
+		if (ptr + g_malloc.mtdata[type] == to_find)
+			return (free_zone(pool, ptr, type));
+		ptr += size + g_malloc.mtdata[type];
+		size = *((uint16_t*)ptr);
+		if (size != 0)
+			size ^= g_malloc.mask[type] ^ FREE_MASK;
 	}
-	return (NULL);
+	return (0);
+}
+
+static int		find_pool(void *to_find, int type)
+{
+	uint64_t	res;
+	void		*pool;
+	void		*looking;
+
+	pool = g_malloc.ptr[type];
+	res = *((uint64_t*)(pool + SIZE_AREA));
+	while (res != 0)
+	{
+		if (find_ptr(pool, to_find, type) == 1)
+		{
+			return (type);
+		}
+		pool = (uint8_t *)res;
+		res = *((uint64_t*)(pool + SIZE_AREA));
+	}
+	if (find_ptr(pool, to_find, type) == 1)
+	{
+		return (type);
+	}
+	return (LARGE);
 }
 
 void			free(void *ptr)
 {
-	if (find_ptr(ptr) == NULL)
-		return ;
+	int		val;
+	int		type;
+
+	if ((type = get_type(ptr)) != ERROR)
+	{
+		if (type != LARGE)
+			val = find_pool(ptr - 2, type);
+		if (type == LARGE || val == LARGE)
+			free_large(ptr);
+	}
 }

@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   release.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 19:33:53 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/19 14:44:47 by rostroh          ###   ########.fr       */
+/*   Created: 2019/12/19 16:44:55 by rostroh           #+#    #+#             */
+/*   Updated: 2019/12/19 16:55:44 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/malloc.h"
+#include "malloc.h"
 
-#define LOOP 5000
-
-int			main(void)
+int				free_zone(void *pool, void *ptr, int type)
 {
-	char		*ptr;
-
-	for (int i = 0; i < LOOP; i++)
-	{
-		ptr = malloc(i);
-		for (int j = 0; j < i; j++)
-			ptr[j] = 0;
-	}
-	return (0);
+	*((uint16_t*)(ptr)) |= FREE_MASK;
+	return (1);
 }

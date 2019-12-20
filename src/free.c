@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/20 18:36:52 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/20 19:46:37 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,10 @@ static uint64_t		find_ptr(void *pool, void *to_find, int type)
 		ft_strhexout("Pour     : ", (uint64_t)to_find);
 		if ((uint64_t)(ptr + g_malloc.mtdata[type]) == (uint64_t)to_find)
 			return (free_zone(pool, ptr, type));
-		else
-			ft_putstr("AH C DOMAJ\n");
 		ptr += size + g_malloc.mtdata[type];
 		size = *((uint16_t *)ptr);
 		if (size != 0)
-			size ^= g_malloc.mask[type] & IGNORE_FIRST;
+			size = (size ^ g_malloc.mask[type]) & IGNORE_FIRST;
 		ft_strhexout("After : ", (uint64_t)ptr);
 		ft_strhexout("Size  : ", size);
 	}

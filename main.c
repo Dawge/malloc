@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:33:53 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/20 16:08:29 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/20 19:07:09 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #define FAT_ALLOC 1
 #define FREE_1 2
 #define FREE_2 3
-#define TEST FREE_1
+#define TEST FREE_2
 
 #if TEST == FREE_2
 #define SIZE 512
@@ -26,6 +26,7 @@ int			main(void)
 	char		*p2;
 	char		*p3;
 
+	puts("\nDEBUT MAIN");
 	p1 = malloc(SIZE);
 	p2 = malloc(SIZE);
 	p3 = malloc(SIZE);

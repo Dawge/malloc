@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/19 18:01:29 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/20 13:58:30 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void				*creat_area(size_t size, int type);
 /*
 **		release.c
 */
-int					free_zone(void *pool, void *ptr, int type);
+uint64_t			free_zone(void *pool, void *ptr, int type);
+
 /*
 **		tools.c
 */

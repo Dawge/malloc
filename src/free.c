@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/20 15:54:37 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/20 18:36:52 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,23 @@
 
 static int			get_type(uint8_t *ptr)
 {
-	int			res;
-
+	uint16_t	res;
+	uint16_t	*new_ptr;
+	
 	ft_strhexout("Get type ptr addr : ", (uint64_t)ptr);
-	if ((uint64_t)ptr < META_DATA)
+	if ((uint64_t)ptr < META_DATA || (uint64_t)ptr > BIG_ADDR)
 		return (ERROR);
-	res = *((uint16_t *)(ptr - META_DATA));
+	ft_strhexout("new addr : ", (uint64_t)(ptr - META_DATA));
+	new_ptr = (uint16_t *)(ptr - META_DATA);
+	ft_putstr("alive\n");
+	//res = *((uint16_t *)(ptr - META_DATA));
+	res = *new_ptr;
+	ft_putstr("debug\n");
 	if ((res & TINY_MASK) == TINY_MASK)
 		return (TINY);
 	if ((res & SMALL_MASK) == SMALL_MASK)
 		return (SMALL);
 	ft_strhexout("Addr size = ", (uint64_t)(ptr - SIZE_LARGE));
-	ft_putchar('\n');
 	return (LARGE);
 }
 
@@ -35,15 +40,22 @@ static uint64_t		find_ptr(void *pool, void *to_find, int type)
 	uint16_t	size;
 
 	ptr = pool + g_malloc.hdrsz[type];
-	size = *((uint16_t *)ptr) ^ g_malloc.mask[type] ^ FREE_MASK;
+	size = (*((uint16_t *)ptr) ^ g_malloc.mask[type]) & IGNORE_FIRST;
+	ft_strhexout("Avant size = ", size);
 	while (size != 0)
 	{
-		if (ptr + g_malloc.mtdata[type] == to_find)
+		ft_strhexout("On check : ", (uint64_t)(ptr + g_malloc.mtdata[type]));
+		ft_strhexout("Pour     : ", (uint64_t)to_find);
+		if ((uint64_t)(ptr + g_malloc.mtdata[type]) == (uint64_t)to_find)
 			return (free_zone(pool, ptr, type));
+		else
+			ft_putstr("AH C DOMAJ\n");
 		ptr += size + g_malloc.mtdata[type];
-		size = *((uint16_t*)ptr);
+		size = *((uint16_t *)ptr);
 		if (size != 0)
-			size ^= g_malloc.mask[type] ^ FREE_MASK;
+			size ^= g_malloc.mask[type] & IGNORE_FIRST;
+		ft_strhexout("After : ", (uint64_t)ptr);
+		ft_strhexout("Size  : ", size);
 	}
 	return (0);
 }
@@ -88,9 +100,12 @@ void				free(void *ptr)
 		if (type != LARGE)
 		{
 			ft_putstr("Ceci est bien\n");
-			val = find_pool(ptr - 2, type);
+			val = find_pool(ptr , type);
 		}
 		if (type == LARGE || val == LARGE)
 			ft_putstr("Large detected\n");//free_large(ptr);
+		ft_putchar('\n');
 	}
+	else
+		ft_putstr("ERROR\n");
 }

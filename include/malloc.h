@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/20 13:58:30 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/20 18:37:17 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define TINY 0
 # define SMALL 1
 # define LARGE 2
-# define ERROR 0xff
+# define ERROR 0xFF
 # define NB_AREA 3
 
 # define TINY_SIZE 1024
@@ -40,6 +40,8 @@
 # define TINY_MASK 0x4000
 # define SMALL_MASK 0x2000
 # define IGNORE_FIRST 0x7FFF
+
+# define BIG_ADDR 0x7F7F00000000
 
 # define VERBOSE 1
 # define DUMP 0

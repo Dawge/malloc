@@ -6,10 +6,11 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:33:53 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/20 16:04:40 by rostroh          ###   ########.fr       */
+/*   Updated: 2019/12/20 16:08:29 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
 #include "include/malloc.h"
 
 #define FAT_ALLOC 1
@@ -41,8 +42,11 @@ int			main(void)
 {
 	char		*ptr;
 
+	puts("\nDEBUT MAIN");
 	ptr = malloc(SIZE);
+	puts("MALLOC: OK");
 	free(ptr);
+	puts("FREE OK");
 	return (0);
 }
 #endif

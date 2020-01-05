@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/20 18:37:17 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/05 21:35:39 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct		s_malloc
 	uint8_t			*ptr[NB_AREA];
 	uint8_t			hdrsz[NB_AREA];
 	uint8_t			mtdata[NB_AREA];
+	uint8_t			bytesz[NB_AREA];
 	uint32_t		mask[NB_AREA - 1];
 	uint32_t		maxsz[NB_AREA - 1];
 	unsigned int	nb_page;

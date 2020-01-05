@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:33:53 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/20 19:07:09 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/05 21:31:05 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #define FAT_ALLOC 1
 #define FREE_1 2
 #define FREE_2 3
-#define TEST FREE_2
+#define TEST FAT_ALLOC
 
 #if TEST == FREE_2
 #define SIZE 512

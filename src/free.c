@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/20 19:46:37 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/05 21:07:40 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void				free(void *ptr)
 	int		val;
 	int		type;
 
+	ft_strhexout("Ici pour free : ", (uint64_t)ptr);
 	if ((type = get_type(ptr)) != ERROR)
 	{
 		if (type != LARGE)
@@ -105,5 +106,5 @@ void				free(void *ptr)
 		ft_putchar('\n');
 	}
 	else
-		ft_putstr("ERROR\n");
+		ft_putstr("ERROR\n\n\n");
 }

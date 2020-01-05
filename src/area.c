@@ -6,14 +6,49 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:44:19 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/19 20:13:33 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/05 21:31:20 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+/*
+** return 1 if a zone is freed in this area
+** Otherwise, return 0 and all the currents zones are allocated
+*/
+static uint8_t		*search_freed_zone(uint8_t *ptr, int type)
+{
+	uint8_t			*tmp;
+	uint16_t		*res;
+	uint16_t		size;
+
+	tmp = ptr;
+	if (type == LARGE)
+	{
+		ft_putstr("sorry poto\n");
+		return (NULL);
+	}
+	size = *((uint16_t*)(ptr + g_malloc.hdrsz[type])) ^ g_malloc.mask[type];
+	while (size != 0)
+	{
+		ft_strhexout("Ici size = ", size);
+		if ((size & FREE_MASK) == FREE_MASK)
+		{
+			res = (uint16_t*)tmp;
+			*res = (*res ^ FREE_MASK);
+			ft_strhexout("Freed zone at addr : ", (uint64_t)tmp);
+			return (tmp);
+		}
+		tmp += size + g_malloc.mtdata[type];
+		size = (uint16_t)(*tmp);
+		if (size != 0)
+			size = (size ^ g_malloc.mask[type]);
+	}
+	return (NULL);
+}
 
 /*
-** if full == 1, area is full. Otherwise, enought space for add malloc
+** if full == 1, area is full.
+** Otherwise, enought space for add malloc
 */
 static int			is_full(uint8_t *ptr, size_t size, int type)
 {
@@ -22,8 +57,8 @@ static int			is_full(uint8_t *ptr, size_t size, int type)
 	if (type == LARGE)
 		return (1);
 	res = *((uint32_t*)(ptr));
-	ft_strhexout("SIZE IN AREA : ", (uint64_t)res);
-	ft_strhexout("MAX SIZE AREA : ", g_malloc.maxsz[type]);
+//	ft_strhexout("SIZE IN AREA : ", (uint64_t)res);
+//	ft_strhexout("MAX SIZE AREA : ", g_malloc.maxsz[type]);
 	if (res + size >= g_malloc.maxsz[type])
 		return (1);
 	return (0);
@@ -35,11 +70,13 @@ static uint8_t		*go_last_area(int type, size_t size, int *full)
 	uint64_t	res;
 
 	ptr = g_malloc.ptr[type];
-	ft_strhexout("First addr = ", (uint64_t)ptr);
+	ft_strhexout("First area addr = ", (uint64_t)ptr);
 	res = *((uint64_t*)(ptr + SIZE_AREA));
-	ft_strhexout("Next addr  = ", res);
+	ft_strhexout("Next area addr  = ", res);
 	while (res != 0)
 	{
+		if (search_freed_zone(ptr, type) != NULL)
+			;
 		if ((*full = is_full(ptr, size, type)) == 0)
 			return (ptr);
 		ptr = (uint8_t*)res;

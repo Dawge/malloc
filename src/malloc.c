@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:11:17 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/20 18:05:47 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/05 21:36:27 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ static void			init_global(void)
 	g_malloc.mtdata[TINY] = META_DATA;
 	g_malloc.mtdata[SMALL] = META_DATA;
 	g_malloc.mtdata[LARGE] = META_LARGE;
+	g_malloc.bytesz[TINY] = SIZE_AREA;
+	g_malloc.bytesz[SMALL] = SIZE_AREA;
+	g_malloc.bytesz[LARGE] = SIZE_LARGE;
 	g_malloc.maxsz[TINY] = (TINY_SIZE + META_DATA) * 100 + HEADER_SIZE;
 	g_malloc.maxsz[SMALL] = (SMALL_SIZE + META_DATA) * 100 + HEADER_SIZE;
 	g_malloc.mask[TINY] = TINY_MASK;
@@ -68,8 +71,9 @@ void				*malloc(size_t size)
 	align(&size);
 	ft_strhexout("Allign size : ", (uint64_t)size);
 	ptr = handle(size, get_type(size));
+	ft_strhexout("RETURN = ", (uint64_t)ptr);
 	if (VERBOSE == 1)
 		ft_printaddr(ptr, get_type(size));
-	ft_strhexout("RETURN = ", (uint64_t)ptr);
+	ft_putchar('\n');
 	return (ptr);
 }

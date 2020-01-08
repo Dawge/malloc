@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:17:28 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/18 21:03:35 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/06 20:08:26 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static size_t		nb_page(size_t size, int type)
 
 static void			*creat_header(void *ptr, size_t size, int type)
 {
+	uint16_t	res;
+
 	if (type == LARGE)
 	{
 		*((uint64_t*)ptr) += size;
@@ -30,7 +32,8 @@ static void			*creat_header(void *ptr, size_t size, int type)
 	*((uint32_t*)ptr) += size + HEADER_SIZE;
 	ft_strhexout("header value : ", *((uint32_t*)ptr));
 	*((uint16_t*)(ptr + HEADER_SIZE)) = size | g_malloc.mask[type];
-	ft_strhexout("meta data : ", *((uint16_t*)(ptr + HEADER_SIZE)) ^ g_malloc.mask[type]);
+	res = *((uint16_t*)(ptr + HEADER_SIZE));
+	ft_strhexout("meta data : ", *((uint16_t*)(ptr + HEADER_SIZE)));// ^ g_malloc.mask[type]);
 	return (ptr);
 }
 

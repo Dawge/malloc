@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/05 21:07:40 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/08 17:37:30 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int			get_type(uint8_t *ptr)
 	ft_putstr("alive\n");
 	//res = *((uint16_t *)(ptr - META_DATA));
 	res = *new_ptr;
+	//ft_strhexout("--> res = ", res);
 	ft_putstr("debug\n");
 	if ((res & TINY_MASK) == TINY_MASK)
 		return (TINY);
@@ -41,19 +42,19 @@ static uint64_t		find_ptr(void *pool, void *to_find, int type)
 
 	ptr = pool + g_malloc.hdrsz[type];
 	size = (*((uint16_t *)ptr) ^ g_malloc.mask[type]) & IGNORE_FIRST;
-	ft_strhexout("Avant size = ", size);
+//	ft_strhexout("Avant size = ", size);
 	while (size != 0)
 	{
-		ft_strhexout("On check : ", (uint64_t)(ptr + g_malloc.mtdata[type]));
-		ft_strhexout("Pour     : ", (uint64_t)to_find);
+//		ft_strhexout("On check : ", (uint64_t)(ptr + g_malloc.mtdata[type]));
+//		ft_strhexout("Pour     : ", (uint64_t)to_find);
 		if ((uint64_t)(ptr + g_malloc.mtdata[type]) == (uint64_t)to_find)
 			return (free_zone(pool, ptr, type));
 		ptr += size + g_malloc.mtdata[type];
 		size = *((uint16_t *)ptr);
 		if (size != 0)
 			size = (size ^ g_malloc.mask[type]) & IGNORE_FIRST;
-		ft_strhexout("After : ", (uint64_t)ptr);
-		ft_strhexout("Size  : ", size);
+//		ft_strhexout("After : ", (uint64_t)ptr);
+//		ft_strhexout("Size  : ", size);
 	}
 	return (0);
 }

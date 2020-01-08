@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/05 21:35:39 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/06 19:58:47 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # define ERROR 0xFF
 # define NB_AREA 3
 
+/*
+** Tiny = 0x400
+** Small = 0x1000
+*/
 # define TINY_SIZE 1024
 # define SMALL_SIZE 4096
 

@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/06 19:58:47 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/08 22:39:31 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,13 @@ t_malloc			g_malloc;
 **		malloc.c
 */
 void				*malloc(size_t size);
+int					get_type(size_t size);
 
 /*
 **		free.c
 */
 void				free(void *ptr);
+int					get_type_mtdata(uint8_t *ptr);
 
 /*
 **		area.c
@@ -88,6 +90,11 @@ void				*creat_area(size_t size, int type);
 **		release.c
 */
 uint64_t			free_zone(void *pool, void *ptr, int type);
+
+/*
+**		realloc.c
+*/
+void				*realloc(void *ptr, size_t size);
 
 /*
 **		tools.c

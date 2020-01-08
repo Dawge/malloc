@@ -6,13 +6,13 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/08 17:37:30 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/08 22:36:31 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static int			get_type(uint8_t *ptr)
+int					get_type_mtdata(uint8_t *ptr)
 {
 	uint16_t	res;
 	uint16_t	*new_ptr;
@@ -67,7 +67,7 @@ static int			find_pool(uint8_t *to_find, int type)
 
 	old = NULL;
 	pool = g_malloc.ptr[type];
-	res = *((uint64_t*)(pool + SIZE_AREA));
+	res = *((uint64_t*)(pool + g_malloc.bytesz[type]));
 	while (res != 0)
 	{
 		if ((pool = (uint64_t*)find_ptr(pool, to_find, type)) != 0)
@@ -82,7 +82,7 @@ static int			find_pool(uint8_t *to_find, int type)
 		}
 		old = pool;
 		pool = (uint8_t *)res;
-		res = *((uint64_t*)(pool + SIZE_AREA));
+		res = *((uint64_t*)(pool + g_malloc.bytesz[type]));
 	}
 	if (find_ptr(pool, to_find, type) == 1)
 		return (type);
@@ -95,8 +95,9 @@ void				free(void *ptr)
 	int		type;
 
 	ft_strhexout("Ici pour free : ", (uint64_t)ptr);
-	if ((type = get_type(ptr)) != ERROR)
+	if ((type = get_type_mtdata(ptr)) != ERROR)
 	{
+		ft_strhexout("type = ", type);
 		if (type != LARGE)
 		{
 			ft_putstr("Ceci est bien\n");

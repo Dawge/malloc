@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:33:53 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/08 18:28:45 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/08 22:36:47 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,22 @@
 #define FREE_2 3
 #define FREED_ZONE 4
 #define FAT_FREE 5
-#define TEST FREED_ZONE
+#define MTDATA_TYPE 6
+#define TEST MTDATA_TYPE
+
+#if TEST == MTDATA_TYPE
+int			main(void)
+{
+	char		*ptr;
+
+	ptr = malloc(sizeof(char) * 512);
+	free(ptr);
+	ptr = malloc(sizeof(char) * 2048);
+	free(ptr);
+	ptr = malloc(sizeof(char) * 6000);
+	free(ptr);
+}
+#endif
 
 #if TEST == FAT_FREE
 #define LOOP 5000

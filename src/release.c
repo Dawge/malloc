@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 16:44:55 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 17:07:11 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/09 20:10:31 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,5 @@ uint64_t		free_zone(void *pool, void *to_free, int type)
 	size = *((uint16_t *)to_free) ^ g_malloc.mask[type];
 	next_pool = *((uint64_t *)(pool + SIZE_AREA));
 	*((uint16_t*)(to_free)) |= FREE_MASK;
-	ft_strhexout("on free de ptr : ", (uint64_t)to_free + META_DATA);
-	ft_strhexout("avec une size de ", size);
-	ft_strhexout("Et a la fin : ", *((uint16_t*)(to_free)));
-/*	ft_bzero(to_free, size);
-	if (check_for_release(pool, type) == 0)
-		return (next_pool);*/
 	return (1);
 }

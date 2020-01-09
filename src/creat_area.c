@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:17:28 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/06 20:08:26 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/09 20:07:22 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ static void			*creat_header(void *ptr, size_t size, int type)
 		return (ptr);
 	}
 	*((uint32_t*)ptr) += size + HEADER_SIZE;
-	ft_strhexout("header value : ", *((uint32_t*)ptr));
 	*((uint16_t*)(ptr + HEADER_SIZE)) = size | g_malloc.mask[type];
 	res = *((uint16_t*)(ptr + HEADER_SIZE));
-	ft_strhexout("meta data : ", *((uint16_t*)(ptr + HEADER_SIZE)));// ^ g_malloc.mask[type]);
 	return (ptr);
 }
 
@@ -45,9 +43,7 @@ void				*creat_area(size_t size, int type)
 	size_alloc = nb_page(size, type) * g_malloc.pagesz;
 	ptr = mmap(0, size_alloc, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, \
 			-1, 0);
-	ft_strhexout("map addr : ", (uint64_t)ptr);
 	ft_bzero(ptr, size_alloc);
-	ft_strhexout("map size : ", size_alloc);
 	if (VERBOSE == 1)
 	{
 		g_malloc.nb_page += nb_page(size, type);

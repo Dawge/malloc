@@ -6,10 +6,11 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:33:53 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 20:02:43 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/09 20:16:30 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <string.h>
 #include "include/malloc.h"
 
@@ -24,13 +25,18 @@
 
 #define TEST MALLOC_CONTENT
 
+void		ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
 #if TEST == MALLOC_CONTENT
 #define S1 0x100
 #define S2 0x100
 int			main(void)
 {
-	char	*p1;
-	char	*p2;
+	unsigned char	*p1;
+	unsigned char	*p2;
 
 	p1 = malloc(sizeof(char) * S1);
 	for (int i = 0; i < S1; i++)
@@ -38,6 +44,8 @@ int			main(void)
 	p2 = malloc(sizeof(char) * S2);
 	for (int i = 0; i < S2; i++)
 		p2[i] = 0xef;
+	if (p2[0] == 0xef)
+		puts("Lol\n");
 	show_alloc_mem();
 }
 #endif

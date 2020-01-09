@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 18:54:18 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 20:01:16 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/09 20:08:41 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static int		check_size(uint8_t *ptr, size_t size, int type, int ptr_type)
 {
-	ft_strhexout("Size = ", size);
-	ft_strhexout("Ptrsz = ", *(uint16_t*)(ptr - g_malloc.mtdata[ptr_type]) & SIZE_MASK);
-	ft_strhexout("a l'addr = ", (uint64_t)(ptr - g_malloc.mtdata[ptr_type]));
 	if (size <= (*(uint16_t*)(ptr - g_malloc.mtdata[ptr_type]) & SIZE_MASK))
 	{
 		if (ptr_type == type)
@@ -81,8 +78,6 @@ static void		*handle_realloc(void *ptr, size_t size, int type, int ptr_type)
 	uint8_t		*new_ptr;
 
 	val = check_size(ptr, size, type, ptr_type);
-	ft_strhexout("type = ", type);
-	ft_strhexout("ptr_type = ", ptr_type);
 	if (val == 1)
 	{
 		ft_putstr("Blanc sur rouge, rien ne bouge\n");
@@ -96,14 +91,11 @@ static void		*handle_realloc(void *ptr, size_t size, int type, int ptr_type)
 	else
 	{
 		ft_putstr("Apres le probleme, c'est les autres\n");
-		ft_strhexout("Dafuk = ", *(uint16_t*)(ptr - g_malloc.mtdata[ptr_type]) & SIZE_MASK);
-		ft_strhexout("addr = ", (uint64_t)(ptr - g_malloc.mtdata[ptr_type]));
 		new_ptr = malloc(size);
 		cpy_data(new_ptr, ptr, type, ptr_type);
 		free(ptr);
 		return (new_ptr);
 	}
-	ft_putstr("Cheh\n");
 	return (NULL);
 }
 

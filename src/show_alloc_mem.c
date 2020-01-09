@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 18:18:40 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 19:56:47 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/09 20:34:07 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ static void			show_pool(uint8_t *ptr, int type)
 	{
 		ptr += HEADER_SIZE;
 		allocsz = *(uint16_t*)ptr & SIZE_MASK;
-		print_addr(ptr, allocsz);
+		print_addr(ptr + g_malloc.mtdata[type], allocsz);
 		while (allocsz != 0)
 		{
 			ptr += allocsz + g_malloc.mtdata[type];
 			allocsz = *(uint16_t*)ptr & SIZE_MASK;
 			if (allocsz != 0)
-				print_addr(ptr, allocsz);
+				print_addr(ptr + g_malloc.mtdata[type], allocsz);
 		}
 	}
 }

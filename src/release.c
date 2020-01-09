@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 16:44:55 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/20 19:43:31 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/09 17:07:11 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ uint64_t		free_zone(void *pool, void *to_free, int type)
 	uint16_t	size;
 	uint64_t	next_pool;
 
-	ft_putstr("\n\n ON FREE QQCHOSE \n\n");
 	if ((*((uint16_t *)to_free) & FREE_MASK) == FREE_MASK)
 	{
 		ft_putstr("Already freed\n");

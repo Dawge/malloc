@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/08 22:36:31 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/09 15:41:29 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ int					get_type_mtdata(uint8_t *ptr)
 		return (ERROR);
 	ft_strhexout("new addr : ", (uint64_t)(ptr - META_DATA));
 	new_ptr = (uint16_t *)(ptr - META_DATA);
-	ft_putstr("alive\n");
 	//res = *((uint16_t *)(ptr - META_DATA));
 	res = *new_ptr;
-	//ft_strhexout("--> res = ", res);
-	ft_putstr("debug\n");
+	ft_strhexout("--> res = ", res);
 	if ((res & TINY_MASK) == TINY_MASK)
+	{
+		ft_strhexout("alo res = ", res);
 		return (TINY);
+	}
 	if ((res & SMALL_MASK) == SMALL_MASK)
 		return (SMALL);
 	ft_strhexout("Addr size = ", (uint64_t)(ptr - SIZE_LARGE));

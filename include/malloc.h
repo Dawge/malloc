@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/08 22:39:31 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/09 19:48:34 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@
 # define FREE_MASK 0x8000
 # define TINY_MASK 0x4000
 # define SMALL_MASK 0x2000
+# define SIZE_MASK 0x1FFF
 # define IGNORE_FIRST 0x7FFF
 
 # define BIG_ADDR 0x7F7F00000000
 
 # define VERBOSE 1
-# define DUMP 0
+# define DUMP 1
 
 typedef struct		s_malloc
 {
@@ -87,6 +88,11 @@ void				*handle(size_t size, int type);
 void				*creat_area(size_t size, int type);
 
 /*
+**		show_alloc_mem.c
+*/
+void				show_alloc_mem(void);
+
+/*
 **		release.c
 */
 uint64_t			free_zone(void *pool, void *ptr, int type);
@@ -99,6 +105,7 @@ void				*realloc(void *ptr, size_t size);
 /*
 **		tools.c
 */
+void				ft_puthex(uint64_t nb);
 void				ft_printaddr(uint8_t *ptr, int type);
 void				ft_strintout(const char *str, int nb);
 void				ft_strhexout(const char *str, uint64_t nb);

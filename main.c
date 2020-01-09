@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:33:53 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 20:16:30 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/09 20:45:06 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void		ft_putchar(char c)
 #define S2 0x100
 int			main(void)
 {
-	unsigned char	*p1;
-	unsigned char	*p2;
+	char	*p1;
+	char	*p2;
 
 	p1 = malloc(sizeof(char) * S1);
 	for (int i = 0; i < S1; i++)
@@ -44,8 +44,6 @@ int			main(void)
 	p2 = malloc(sizeof(char) * S2);
 	for (int i = 0; i < S2; i++)
 		p2[i] = 0xef;
-	if (p2[0] == 0xef)
-		puts("Lol\n");
 	show_alloc_mem();
 }
 #endif

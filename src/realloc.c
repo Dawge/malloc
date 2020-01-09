@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 18:54:18 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 20:08:41 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/09 21:03:03 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ static int		check_enlarge(uint8_t *ptr, size_t size, int type, int ptr_type)
 	uint16_t		ptrsz;
 	uint16_t		freedsz;
 
-	ptrsz = *(ptr - g_malloc.mtdata[ptr_type]) & SIZE_MASK;
+	ptrsz = *(uint16_t*)(ptr - g_malloc.mtdata[ptr_type]) & SIZE_MASK;
 	ft_strhexout("enlarge ptrsz = ", ptrsz);
 	if (*(ptr + ptrsz) == 0)
 	{
-		*(ptr - g_malloc.mtdata[ptr_type]) = size;
+		*(uint16_t*)(ptr - g_malloc.mtdata[ptr_type]) = size | g_malloc.mask[ptr_type];
+		ft_strhexout("Alo = ", *(uint16_t*)(ptr - g_malloc.mtdata[ptr_type]));
 		return (1);
 	}
 	freedsz = *(ptr + ptrsz) & SIZE_MASK;
@@ -86,6 +87,7 @@ static void		*handle_realloc(void *ptr, size_t size, int type, int ptr_type)
 	else if (type == ptr_type && check_enlarge(ptr, size, type, ptr_type) == 1)
 	{
 		ft_putstr("Si on se sert, il y a de la place pour tout le monde\n");
+		ft_strhexout("Ici ca devrait aller\n", *(uint16_t*)(ptr - g_malloc.mtdata[type]));
 		return (ptr);
 	}
 	else

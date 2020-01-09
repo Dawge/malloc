@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:44:19 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 20:06:36 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/09 20:46:29 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static uint8_t		*pars_block(uint8_t *ptr, int type, size_t size, int *freed)
 			*freed = 1;
 			ft_putstr("Dobby est libre !\n");
 			ft_strhexout("Freed zone at : ", (uint64_t)ptr);
-			ft_strhexout("size = ", res & SIZE_MASK);
+			ft_strhexout("size = ", res);
 			return (ptr);
 		}
 		if (res != 0)

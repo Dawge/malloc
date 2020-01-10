@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 20:08:01 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/10 18:59:43 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,35 @@ static int			find_pool(uint8_t *to_find, int type)
 	return (LARGE);
 }
 
+static int			free_large(uint8_t *ptr)
+{
+	uint8_t		*res;
+	uint8_t		*old;
+	uint64_t	next_addr;
+
+	res = g_malloc.ptr[LARGE];
+	if (res + HEADER_LARGE == ptr)
+	{
+		g_malloc.ptr[LARGE] = (void*)(*(uint64_t*)(res + SIZE_LARGE));
+		munmap(res, (uint64_t)(*res) / 16 + 1);
+		return (1);
+	}
+	next_addr = *(uint64_t*)(res + SIZE_LARGE);
+	while (next_addr != 0)
+	{
+		old = res;
+		res = (uint8_t*)next_addr;
+		next_addr = *(uint64_t*)(res + SIZE_LARGE);
+		if (res + HEADER_LARGE == ptr)
+		{
+			*(uint64_t*)(old + SIZE_LARGE) = next_addr;
+			munmap(res, (uint64_t)(*res) / 16 + 1);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void				free(void *ptr)
 {
 	int		val;
@@ -92,7 +121,12 @@ void				free(void *ptr)
 			val = find_pool(ptr , type);
 		}
 		if (type == LARGE || val == LARGE)
-			ft_putstr("Large detected\n");//free_large(ptr);
+		{
+			if (free_large(ptr) == 0)
+				ft_putstr("fechie\n");
+			else
+				ft_putstr("C'est franchement cool\n");
+		}
 		ft_putchar('\n');
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:11:17 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 20:47:18 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/10 18:59:02 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ void				*malloc(size_t size)
 	if (VERBOSE == 1)
 		ft_printaddr(ptr, get_type(size));
 	ft_putchar('\n');
-	show_alloc_mem();
+	//show_alloc_mem();
 	return (ptr);
 }

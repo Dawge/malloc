@@ -6,11 +6,12 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:44:19 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 20:46:29 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/10 19:03:37 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+
 /*
 ** if full == 1, area is full.
 ** Otherwise, enought space for add malloc

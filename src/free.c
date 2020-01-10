@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/10 18:59:43 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/10 20:21:39 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,20 @@ static int			free_large(uint8_t *ptr)
 {
 	uint8_t		*res;
 	uint8_t		*old;
+	uint64_t	size;
 	uint64_t	next_addr;
 
 	res = g_malloc.ptr[LARGE];
 	if (res + HEADER_LARGE == ptr)
 	{
 		g_malloc.ptr[LARGE] = (void*)(*(uint64_t*)(res + SIZE_LARGE));
-		munmap(res, (uint64_t)(*res) / 16 + 1);
+		size = (uint64_t)(*res) / g_malloc.pagesz + 1;
+		munmap(res, size * g_malloc.pagesz);
+		if (VERBOSE == 1)
+		{
+			g_malloc.nb_page -= size;
+			ft_strintout("Page reclaims : ", g_malloc.nb_page);
+		}
 		return (1);
 	}
 	next_addr = *(uint64_t*)(res + SIZE_LARGE);
@@ -101,7 +108,13 @@ static int			free_large(uint8_t *ptr)
 		if (res + HEADER_LARGE == ptr)
 		{
 			*(uint64_t*)(old + SIZE_LARGE) = next_addr;
-			munmap(res, (uint64_t)(*res) / 16 + 1);
+			size = (uint64_t)(*res) / 16 + 1;
+			munmap(res, size);
+			if (VERBOSE == 1)
+			{
+				g_malloc.nb_page -= size;
+				ft_strintout("Page reclaims : ", g_malloc.nb_page);
+			}
 			return (1);
 		}
 	}
@@ -113,7 +126,6 @@ void				free(void *ptr)
 	int		val;
 	int		type;
 
-	ft_strhexout("Ici pour free : ", (uint64_t)ptr);
 	if ((type = get_type_mtdata(ptr)) != ERROR)
 	{
 		if (type != LARGE)
@@ -123,12 +135,9 @@ void				free(void *ptr)
 		if (type == LARGE || val == LARGE)
 		{
 			if (free_large(ptr) == 0)
-				ft_putstr("fechie\n");
-			else
-				ft_putstr("C'est franchement cool\n");
+				;//ft_putstr("fechie\n");
 		}
-		ft_putchar('\n');
 	}
 	else
-		ft_putstr("ERROR\n\n\n");
+		;//ft_putstr("ERROR\n\n\n");
 }

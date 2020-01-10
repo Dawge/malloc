@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:11:17 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/10 18:59:02 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/10 20:15:22 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,16 @@ void				*malloc(size_t size)
 {
 	void		*ptr;
 
-//	if (size == 0)
-//		return (NULL);
-	ft_strhexout("New malloc : ", (uint64_t)size);
+	if (VERBOSE == 2)
+		ft_strhexout("Malloc size : ", size);
 	if (g_init == 0)
 	{
 		init_global();
 		g_init = 1;
 	}
 	align(&size);
-	ft_strhexout("Allign size : ", (uint64_t)size);
 	ptr = handle(size, get_type(size));
-	ft_strhexout("RETURN = ", (uint64_t)ptr);
-	if (VERBOSE == 1)
+	if (VERBOSE == 2)
 		ft_printaddr(ptr, get_type(size));
-	ft_putchar('\n');
-	//show_alloc_mem();
 	return (ptr);
 }

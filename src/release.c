@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 16:44:55 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 20:10:31 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/10 20:21:46 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ int				check_for_release(void *pool, int type)
 		ptr += size + g_malloc.mtdata[type];
 		size = *((uint16_t*)ptr);
 		if ((size & FREE_MASK) != FREE_MASK)
-		{
-			ft_putstr("PADPO\n");
 			return (1);
-		}
 		if (size != 0)
 			size = (size ^ g_malloc.hdrsz[type]) & IGNORE_FIRST;
 	}
@@ -48,10 +45,7 @@ uint64_t		free_zone(void *pool, void *to_free, int type)
 	uint64_t	next_pool;
 
 	if ((*((uint16_t *)to_free) & FREE_MASK) == FREE_MASK)
-	{
-		ft_putstr("Already freed\n");
 		return (1);
-	}
 	size = *((uint16_t *)to_free) ^ g_malloc.mask[type];
 	next_pool = *((uint64_t *)(pool + SIZE_AREA));
 	*((uint16_t*)(to_free)) |= FREE_MASK;

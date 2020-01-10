@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 19:48:34 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/10 20:16:17 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 
 # define BIG_ADDR 0x7F7F00000000
 
-# define VERBOSE 1
+# define VERBOSE 0
 # define DUMP 1
 
 typedef struct		s_malloc
@@ -95,6 +95,8 @@ void				show_alloc_mem(void);
 /*
 **		release.c
 */
+void				release_large(uint8_t *to_release, uint64_t size, \
+		void *ptr, uint64_t next_addr);
 uint64_t			free_zone(void *pool, void *ptr, int type);
 
 /*

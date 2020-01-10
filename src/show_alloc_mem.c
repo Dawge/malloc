@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 18:18:40 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 20:34:07 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/10 20:15:45 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void				show_alloc_mem(void)
 	static char		*type_name[NB_AREA] = {"TINY", "SMALL", "LARGE"};
 
 	i = 0;
-	ft_putstr("\n\n\n SALUT\n\n");
 	while (i < NB_AREA)
 	{
 		ft_putstr(type_name[i]);

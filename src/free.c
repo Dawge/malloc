@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/10 20:21:39 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/11 15:57:19 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,33 @@ static int			find_pool(uint8_t *to_find, int type)
 	{
 		if ((pool = (uint64_t*)find_ptr(pool, to_find, type)) != 0)
 		{
+	//		ft_putstr("eh salut\n");
 			if ((uint64_t)pool == 1)
 				return (type);
 			if (old == NULL)
 				g_malloc.ptr[type] = (uint8_t*)res;
 			else
-				*(old + SIZE_AREA) = (uint64_t)pool;
+				*(old + SIZE_AREA) = (uint64_t)res;
 			return (type);
 		}
+	//	else
+	//		ft_strhexout("Pool addr = ", (uint64_t)pool);
 		old = pool;
 		pool = (uint8_t *)res;
 		res = *((uint64_t*)(pool + g_malloc.bytesz[type]));
 	}
-	if (find_ptr(pool, to_find, type) == 1)
+	if ((pool = (uint64_t*)find_ptr(pool, to_find, type)) != 0)
+	{
+		//ft_putstr("eh salut\n");
+		if ((uint64_t)pool == 1)
+			return (type);
+		if (old == NULL)
+			g_malloc.ptr[type] = (uint8_t*)res;
+		else
+			*(old + SIZE_AREA) = (uint64_t)res;
 		return (type);
+	}
+	//ft_putstr("Nan, c'est chiant\n");
 	return (LARGE);
 }
 
@@ -126,11 +139,14 @@ void				free(void *ptr)
 	int		val;
 	int		type;
 
+	if ((uint64_t)ptr != 0)
+		ft_strhexout("free ptr : ", (uint64_t)ptr);
 	if ((type = get_type_mtdata(ptr)) != ERROR)
 	{
 		if (type != LARGE)
 		{
 			val = find_pool(ptr , type);
+		//	ft_strintout("C'est cool : ", val);
 		}
 		if (type == LARGE || val == LARGE)
 		{
@@ -138,6 +154,6 @@ void				free(void *ptr)
 				;//ft_putstr("fechie\n");
 		}
 	}
-	else
-		;//ft_putstr("ERROR\n\n\n");
+	if ((uint64_t)ptr != 0)
+		ft_putstr("fin\n\n");
 }

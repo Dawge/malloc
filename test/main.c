@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:33:53 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/09 20:45:06 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/11 15:31:37 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,23 @@ void		ft_putchar(char c)
 {
 	write(1, &c, 1);
 }
+
+#if TEST == RELEASE_ONE
+#define NB_ALLOC 100
+int			main(void)
+{
+	int			i;
+	char		*p1;
+
+	i = 0;
+	while (i < NB_ALLOC)
+	{
+		
+		i++;
+	}
+	return (0);
+}
+#endif
 
 #if TEST == MALLOC_CONTENT
 #define S1 0x100

@@ -6,9 +6,17 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 20:32:00 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/10 20:37:01 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/11 15:31:33 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <unistd.h>
+#include <string.h>
+
+void	print(char *s)
+{
+	write(1, s, strlen(s));
+}
 
 int			main(void)
 {
@@ -16,6 +24,7 @@ int			main(void)
 	char		*adr;
 
 	i = 0;
+	print("debutmain\n");
 	while (i < 1024)
 	{
 		adr = (char *)malloc(1024);

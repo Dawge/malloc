@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 18:54:18 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/10 20:15:55 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/11 15:59:11 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,13 @@ static void		*handle_realloc(void *ptr, size_t size, int type, int ptr_type)
 	val = check_size(ptr, size, type, ptr_type);
 	if (val == 1)
 	{
+		ft_putstr("Fin realloc1\n\n");
 //		ft_putstr("Blanc sur rouge, rien ne bouge\n");
 		return (ptr);
 	}
 	else if (type == ptr_type && check_enlarge(ptr, size, type, ptr_type) == 1)
 	{
+		ft_putstr("Fin realloc2\n\n");
 //		ft_putstr("Si on se sert, il y a de la place pour tout le monde\n");
 //		ft_strhexout("Ici ca devrait aller\n", *(uint16_t*)(ptr - g_malloc.mtdata[type]));
 		return (ptr);
@@ -106,8 +108,8 @@ void			*realloc(void *ptr, size_t size)
 	int			type;
 	int			ptr_type;
 
-//	ft_strhexout("salut realloc : ", (uint64_t)ptr);
-//	ft_strhexout("avec une size de : ", size);
+	ft_strhexout("salut realloc : ", (uint64_t)ptr);
+	ft_strhexout("avec une size de : ", size);
 	if (ptr == NULL)
 		return (malloc(size));
 	type = get_type(size);

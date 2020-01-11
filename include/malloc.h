@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/10 20:16:17 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/11 15:54:43 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct		s_malloc
 	uint32_t		maxsz[NB_AREA - 1];
 	unsigned int	nb_page;
 	size_t			pagesz;
+	uint8_t			init;
 }					t_malloc;
 
 t_malloc			g_malloc;

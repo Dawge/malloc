@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:17:28 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/10 20:16:40 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/11 15:01:27 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ void				*creat_area(size_t size, int type)
 	ft_bzero(ptr, size_alloc);
 	if (VERBOSE == 1)
 	{
+		ft_strhexout("Creat new area : ", (uint64_t)ptr);
+		ft_strhexout("with a size of : ", size_alloc);
+		ft_strintout("Page before : ", g_malloc.nb_page);
 		g_malloc.nb_page += nb_page(size, type);
 		ft_strintout("Page reclaims : ", g_malloc.nb_page);
+		ft_putchar('\n');
 	}
 	return (creat_header(ptr, size, type));
 }

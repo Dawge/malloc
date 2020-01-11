@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:11:17 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/10 20:15:22 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/11 15:54:56 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int					g_init = 0;
 
 static void			init_global(void)
 {
+//	g_malloc.init = 0x42;
 	g_malloc.ptr[TINY] = NULL;
 	g_malloc.ptr[SMALL] = NULL;
 	g_malloc.ptr[LARGE] = NULL;
@@ -34,6 +35,7 @@ static void			init_global(void)
 	g_malloc.mask[SMALL] = SMALL_MASK;
 	g_malloc.nb_page = 0;
 	g_malloc.pagesz = getpagesize();
+	g_malloc.init = 0x01;
 }
 
 static void			align(size_t *size)
@@ -62,16 +64,23 @@ void				*malloc(size_t size)
 {
 	void		*ptr;
 
-	if (VERBOSE == 2)
+	//if ((VERBOSE & 0x2) == 0x2)
 		ft_strhexout("Malloc size : ", size);
-	if (g_init == 0)
+	//ft_strhexout("init = ", g_malloc.init);
+	/*if (g_init == 0)
 	{
+		ft_putstr("init_global\n");
 		init_global();
 		g_init = 1;
+	}*/
+	if (!g_malloc.init)
+	{
+		ft_putstr("salut\n");
+		init_global();
 	}
 	align(&size);
 	ptr = handle(size, get_type(size));
-	if (VERBOSE == 2)
+	//if ((VERBOSE & 0x02) == 0x02)
 		ft_printaddr(ptr, get_type(size));
 	return (ptr);
 }

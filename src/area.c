@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:44:19 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/10 20:06:02 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/11 20:53:33 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static uint8_t		*pars_block(uint8_t *ptr, int type, size_t size, int *freed)
 {
 	uint16_t	res;
 
-	res = (*((uint16_t*)(ptr + g_malloc.hdrsz[type])) ^ g_malloc.mask[type])  \
-		  & IGNORE_FIRST;
+	res = *((uint16_t*)(ptr + g_malloc.hdrsz[type])) & SIZE_MASK;//^ g_malloc.mask[type])  
+		//  & IGNORE_FIRST;
 	ptr += g_malloc.hdrsz[type];
 	while (res != 0)
 	{
@@ -84,9 +84,11 @@ void				*handle(size_t size, int t)
 	if (g_malloc.ptr[t] == NULL)
 	{
 		g_malloc.ptr[t] = creat_area(size, t);
+		ft_strhexout("Pool : ", (uint64_t)g_malloc.ptr[t]);
 		return (g_malloc.ptr[t] + g_malloc.hdrsz[t] + g_malloc.mtdata[t]);
 	}
 	ptr = go_last_area(t, size, &full);
+	ft_strhexout("Pool : ", (uint64_t)ptr);
 	if (full == 0)
 	{
 		*((uint32_t*)(ptr)) += (uint32_t)size + META_DATA;

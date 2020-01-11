@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 18:54:18 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/11 15:59:11 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/11 17:46:02 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,17 @@ static int		check_enlarge(uint8_t *ptr, size_t size, int type, int ptr_type)
 
 static void		*handle_realloc(void *ptr, size_t size, int type, int ptr_type)
 {
-	int			val;
+	//int			val;
 	uint8_t		*new_ptr;
 
-	val = check_size(ptr, size, type, ptr_type);
-	if (val == 1)
+	if (type == LARGE)
+	{
+		free(ptr);
+		return (malloc(size));
+	}
+	//val = check_size(ptr, size, type, ptr_type);
+	//if (val == 1)
+	if (check_size(ptr, size, type, ptr_type) == 1)
 	{
 		ft_putstr("Fin realloc1\n\n");
 //		ft_putstr("Blanc sur rouge, rien ne bouge\n");

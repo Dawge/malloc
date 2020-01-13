@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/11 20:41:57 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/13 21:02:03 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ int					get_type_mtdata(uint8_t *ptr)
 	if ((uint64_t)ptr < META_DATA || (uint64_t)ptr > BIG_ADDR)
 		return (ERROR);
 	new_ptr = (uint16_t *)(ptr - META_DATA);
+	//ft_strhexout("new ptr = ", (uint64_t)new_ptr);
 	res = *new_ptr;
-	ft_strhexout("Res = ", res);
+	//ft_strhexout("Res = ", res);
 	if ((res & TINY_MASK) == TINY_MASK)
-	{
 		return (TINY);
-	}
 	if ((res & SMALL_MASK) == SMALL_MASK)
 		return (SMALL);
 	return (LARGE);
@@ -35,20 +34,30 @@ static uint64_t		find_ptr(void *pool, void *to_find, int type)
 {
 	void		*ptr;
 	uint16_t	size;
+	//uint8_t		*next_ptr;
+	//uint8_t		*nextnext;
 
 	ptr = pool + g_malloc.hdrsz[type];
 	size = (*((uint16_t *)ptr) ^ g_malloc.mask[type]) & IGNORE_FIRST;
-	ft_strhexout("ptr = ", (uint64_t)ptr + g_malloc.mtdata[type]);
+	/*ft_strhexout("ptr = ", (uint64_t)ptr + g_malloc.mtdata[type]);
 	ft_strhexout("On cherche : ", (uint64_t)to_find);
-	ft_strhexout("ptr size = ", size);
+	ft_strhexout("ptr size = ", size);*/
 	while (size != 0)
 	{
 		if ((uint64_t)(ptr + g_malloc.mtdata[type]) == (uint64_t)to_find)
 			return (free_zone(pool, ptr, type));
 		ptr += size + g_malloc.mtdata[type];
 		size = *((uint16_t *)ptr) & SIZE_MASK;
-		ft_strhexout("ptr = ", (uint64_t)ptr + g_malloc.mtdata[type]);
-		ft_strhexout("ptr size = ", size);
+		//ft_strhexout("ptr = ", (uint64_t)ptr + g_malloc.mtdata[type]);
+		//ft_strhexout("ptr size = ", size);
+/*
+		next_ptr = ptr + size + g_malloc.mtdata[type];
+		ft_strhexout("next ptr = ", (uint64_t)next_ptr + g_malloc.mtdata[type]);
+		ft_strhexout("next_ptr size = ", *((uint16_t *)next_ptr) & SIZE_MASK);
+
+		nextnext= next_ptr + (*((uint16_t *)next_ptr) & SIZE_MASK) + g_malloc.mtdata[type];
+		ft_strhexout("nextnext ptr = ", (uint64_t)nextnext + g_malloc.mtdata[type]);
+		ft_strhexout("nextnext ptr size = ", *((uint16_t *)nextnext) & SIZE_MASK);*/
 		//if (size != 0)
 		//	size = (size ^ g_malloc.mask[type]) & IGNORE_FIRST;
 	}
@@ -65,7 +74,7 @@ static int			find_pool(uint8_t *to_find, int type)
 	pool = g_malloc.ptr[type];
 	if (pool == 0x0)
 		return (LARGE);
-	ft_strhexout("pool = ", (uint64_t)pool);
+	//ft_strhexout("pool = ", (uint64_t)pool);
 	res = *((uint64_t*)(pool + g_malloc.bytesz[type]));
 	while (res != 0)
 	{
@@ -81,18 +90,18 @@ static int			find_pool(uint8_t *to_find, int type)
 			return (type);
 		}
 		else
-			ft_strhexout("Pool addr = ", (uint64_t)pool);
+			;//ft_strhexout("Pool addr = ", (uint64_t)pool);
 		old = pool;
 		pool = (uint8_t *)res;
 		res = *((uint64_t*)(pool + g_malloc.bytesz[type]));
-		ft_strhexout("next = ", res);
+		//ft_strhexout("next = ", res);
 	}
 	if ((pool = (uint64_t*)find_ptr(pool, to_find, type)) != 0)
 	{
-		ft_putstr("eh salut\n");
+		//ft_putstr("eh salut\n");
 		if ((uint64_t)pool == 1)
 			return (type);
-		ft_putstr("rochon\n");
+		//ft_putstr("rochon\n");
 		if (old == NULL)
 			g_malloc.ptr[type] = (uint8_t*)res;
 		else
@@ -111,7 +120,9 @@ static int			free_large(uint8_t *ptr)
 	uint64_t	next_addr;
 
 	res = g_malloc.ptr[LARGE];
-	if (res + HEADER_LARGE == ptr)
+	if (res == NULL)
+		return (0);
+	if (ptr >= res && res + HEADER_LARGE == ptr)
 	{
 		g_malloc.ptr[LARGE] = (void*)(*(uint64_t*)(res + SIZE_LARGE));
 		size = (uint64_t)(*res) / g_malloc.pagesz + 1;
@@ -119,17 +130,20 @@ static int			free_large(uint8_t *ptr)
 		if (VERBOSE == 1)
 		{
 			g_malloc.nb_page -= size;
-			ft_strintout("Page reclaims : ", g_malloc.nb_page);
+			//ft_strintout("Page reclaims : ", g_malloc.nb_page);
 		}
 		return (1);
 	}
+	//ft_putstr("MDR\n");
 	next_addr = *(uint64_t*)(res + SIZE_LARGE);
+	//ft_putstr("Chaussette\n");
 	while (next_addr != 0)
 	{
+		//ft_putstr("MDR\n");
 		old = res;
 		res = (uint8_t*)next_addr;
 		next_addr = *(uint64_t*)(res + SIZE_LARGE);
-		if (res + HEADER_LARGE == ptr)
+		if (ptr >= res && res + HEADER_LARGE == ptr)
 		{
 			*(uint64_t*)(old + SIZE_LARGE) = next_addr;
 			size = (uint64_t)(*res) / 16 + 1;
@@ -142,6 +156,7 @@ static int			free_large(uint8_t *ptr)
 			return (1);
 		}
 	}
+	//ft_putstr("Plop\n");
 	return (0);
 }
 
@@ -150,24 +165,24 @@ void				free(void *ptr)
 	int		val;
 	int		type;
 
-	val = TINY;
+	val = TINY;/*
 	if ((uint64_t)ptr != 0)
-		ft_strhexout("free ptr : ", (uint64_t)ptr);
+		ft_strhexout("free ptr : ", (uint64_t)ptr);*/
 	if ((type = get_type_mtdata(ptr)) != ERROR)
 	{
 		if (type != LARGE)
 		{
-			ft_putstr("Chouette\n");
+			//ft_putstr("Chouette\n");
 			val = find_pool(ptr , type);
 		//	ft_strintout("C'est cool : ", val);
 		}
 		if (type == LARGE || val == LARGE)
 		{
-			ft_strhexout("C'est un large : ", val);
+			//ft_strhexout("C'est un large : ", val);
 			if (free_large(ptr) == 0)
 				;//ft_putstr("fechie\n");
 		}
-	}
+	}/*
 	if ((uint64_t)ptr != 0)
-		ft_putstr("fin\n\n");
+		ft_putstr("fin\n\n");*/
 }

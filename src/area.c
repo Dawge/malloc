@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:44:19 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/11 20:53:33 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/13 21:02:13 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,19 @@ void				*handle(size_t size, int t)
 	if (g_malloc.ptr[t] == NULL)
 	{
 		g_malloc.ptr[t] = creat_area(size, t);
-		ft_strhexout("Pool : ", (uint64_t)g_malloc.ptr[t]);
+	//	ft_strhexout("Pool : ", (uint64_t)g_malloc.ptr[t]);
 		return (g_malloc.ptr[t] + g_malloc.hdrsz[t] + g_malloc.mtdata[t]);
 	}
 	ptr = go_last_area(t, size, &full);
-	ft_strhexout("Pool : ", (uint64_t)ptr);
+	//ft_strhexout("Pool : ", (uint64_t)ptr);
 	if (full == 0)
 	{
 		*((uint32_t*)(ptr)) += (uint32_t)size + META_DATA;
 		ptr = pars_block(ptr, t, size, &freed);
 		if (freed == 0)
 			*((uint16_t*)(ptr)) = size | g_malloc.mask[t];
+		else
+			;//ft_strhexout("Cheh : ", (*((uint16_t*)(ptr)) & SIZE_MASK));
 		return (ptr + g_malloc.mtdata[t]);
 	}
 	else

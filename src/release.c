@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 16:44:55 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/11 20:10:34 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/13 21:01:53 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int				check_for_release(void *pool, int type)
 	uint16_t	size;
 
 	//ft_strhexout("\nTry release pool : ", (uint64_t)pool);
-	ft_strhexout("RELEASE INC : ", (uint64_t)pool);
+	//ft_strhexout("RELEASE INC : ", (uint64_t)pool);
 	ptr = pool + g_malloc.hdrsz[type];
 	size = *((uint16_t *)ptr);// ^ g_malloc.mask[type]) & IGNORE_FIRST;
-	ft_strhexout("ptr = ", (uint64_t)ptr);
-	ft_strhexout("size = ", size);
-	ft_strhexout("mask = ", size & FREE_MASK);
+	//ft_strhexout("ptr = ", (uint64_t)ptr);
+	//ft_strhexout("size = ", size);
+	//ft_strhexout("mask = ", size & FREE_MASK);
 	while (size != 0)
 	{
 		/*ft_strhexout("ptr = ", (uint64_t)ptr);
@@ -33,16 +33,16 @@ int				check_for_release(void *pool, int type)
 		ft_strhexout("mask = ", size & FREE_MASK);*/
 		if ((dbug = (size & FREE_MASK)) != FREE_MASK)
 		{
-			ft_putstr("leave\n");
+		//	ft_putstr("leave\n");
 			return (0);
 		}
 		//if (size != 0)
 		//	size = (size ^ g_malloc.hdrsz[type]) & IGNORE_FIRST;
 		ptr += (size & SIZE_MASK) + g_malloc.mtdata[type];
 		size = *((uint16_t*)ptr);
-		ft_strhexout("ptr = ", (uint64_t)ptr);
-		ft_strhexout("size = ", size);
-		ft_strhexout("mask = ", size & FREE_MASK);
+		//ft_strhexout("ptr = ", (uint64_t)ptr);
+		//ft_strhexout("size = ", size);
+		//ft_strhexout("mask = ", size & FREE_MASK);
 	}
 	/*if (size != 0 && (size & FREE_MASK) != FREE_MASK)
 	{
@@ -52,7 +52,7 @@ int				check_for_release(void *pool, int type)
 	size_area = (g_malloc.maxsz[type] / g_malloc.pagesz + 1) * g_malloc.pagesz;
 	ft_bzero(pool, size_area);
 	if (munmap(pool, size_area) == -1)
-		ft_putstr("An error occured while releasing memory\n");
+		;//ft_putstr("An error occured while releasing memory\n");
 	if (VERBOSE == 1)
 	{
 		ft_strhexout("Release addr : ", (uint64_t)pool);
@@ -71,12 +71,18 @@ uint64_t		free_zone(void *pool, void *to_free, int type)
 
 	if ((*((uint16_t *)to_free) & FREE_MASK) == FREE_MASK)
 		return (1);
-	size = *((uint16_t *)to_free) ^ g_malloc.mask[type];
+	size = *((uint16_t *)to_free) & SIZE_MASK;
+	//ft_strhexout("Wanna free addr : ", (uint64_t)to_free);
+	//ft_strhexout("avec une size de : ", size);
 	next_pool = *((uint64_t *)(pool + SIZE_AREA));
 	*((uint16_t*)(to_free)) |= FREE_MASK;
 	if (check_for_release(pool, type) == 0)
+	{
+		size = *((uint16_t *)to_free) & SIZE_MASK;
+		//ft_strhexout("avec apres une size de : ", size);
 		return (1);
-	ft_putstr("Zooooooooooooo\n");
+	}
+	//ft_putstr("Zooooooooooooo\n");
 	//ft_strhexout("return free zone : ", (uint64_t)pool);
 	return ((uint64_t)pool);
 }

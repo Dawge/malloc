@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 18:54:18 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/11 17:46:02 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/13 21:01:56 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ static void		cpy_data(uint8_t *dst, uint8_t *src, int dst_type, int src_type)
 	uint16_t	srcsz;
 
 	i = 0;
-	dstsz = *(uint16_t*)(dst - g_malloc.mtdata[dst_type]);
-	srcsz = *(uint16_t*)(src - g_malloc.mtdata[src_type]);
+	dstsz = *(uint16_t*)(dst - g_malloc.mtdata[dst_type]) & SIZE_MASK;
+	srcsz = *(uint16_t*)(src - g_malloc.mtdata[src_type]) & SIZE_MASK;
 	while (i < srcsz)
 	{
+	//	ft_strhexout("cpy data to : ", (uint64_t)(dst + i));
 		dst[i] = src[i];
 		i++;
 		if (i == dstsz)
@@ -87,20 +88,20 @@ static void		*handle_realloc(void *ptr, size_t size, int type, int ptr_type)
 	//if (val == 1)
 	if (check_size(ptr, size, type, ptr_type) == 1)
 	{
-		ft_putstr("Fin realloc1\n\n");
+	//	ft_putstr("Fin realloc1\n\n");
 //		ft_putstr("Blanc sur rouge, rien ne bouge\n");
 		return (ptr);
 	}
 	else if (type == ptr_type && check_enlarge(ptr, size, type, ptr_type) == 1)
 	{
-		ft_putstr("Fin realloc2\n\n");
+	//	ft_putstr("Fin realloc2\n\n");
 //		ft_putstr("Si on se sert, il y a de la place pour tout le monde\n");
 //		ft_strhexout("Ici ca devrait aller\n", *(uint16_t*)(ptr - g_malloc.mtdata[type]));
 		return (ptr);
 	}
 	else
 	{
-//		ft_putstr("Apres le probleme, c'est les autres\n");
+	//	ft_putstr("Apres le probleme, c'est les autres\n");
 		new_ptr = malloc(size);
 		cpy_data(new_ptr, ptr, type, ptr_type);
 		free(ptr);
@@ -114,8 +115,8 @@ void			*realloc(void *ptr, size_t size)
 	int			type;
 	int			ptr_type;
 
-	ft_strhexout("salut realloc : ", (uint64_t)ptr);
-	ft_strhexout("avec une size de : ", size);
+//	ft_strhexout("salut realloc : ", (uint64_t)ptr);
+//	ft_strhexout("avec une size de : ", size);
 	if (ptr == NULL)
 		return (malloc(size));
 	type = get_type(size);

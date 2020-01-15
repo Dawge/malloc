@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/13 21:02:49 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/15 12:01:04 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define BIG_ADDR 0x7F7F00000000
 
 # define VERBOSE 0
-# define DUMP 1
+# define DUMP 0
 
 typedef struct		s_malloc
 {
@@ -79,6 +79,11 @@ void				free(void *ptr);
 int					get_type_mtdata(uint8_t *ptr);
 
 /*
+**		free_large.c
+*/
+int					free_large(uint8_t *ptr);
+
+/*
 **		area.c
 */
 void				*handle(size_t size, int type);
@@ -98,7 +103,7 @@ void				show_alloc_mem(void);
 */
 void				release_large(uint8_t *to_release, uint64_t size, \
 		void *ptr, uint64_t next_addr);
-uint64_t			free_zone(void *pool, void *ptr, int type);
+uint64_t			free_zone(uint8_t *pool, void *ptr, int type);
 
 /*
 **		realloc.c

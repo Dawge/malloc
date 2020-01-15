@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/15 15:03:07 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/15 16:12:45 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ static void		*find_ptr(void *pool, void *to_find, int type)
 	{
 		if ((uint64_t)(ptr + g_malloc.mtdata[type]) == (uint64_t)to_find)
 		{
-			ft_strhexout("trouve : ", (uint64_t)to_find);
+		//	ft_strhexout("trouve : ", (uint64_t)to_find);
 			return (to_find);
 		}
 			//return (free_zone(pool, ptr, type));
 		ptr += size + g_malloc.mtdata[type];
 		size = *((uint16_t *)ptr) & SIZE_MASK;
-		//ft_strhexout("ptr = ", (uint64_t)ptr + g_malloc.mtdata[type]);
+		//ft_strhexout("ptr  = ", (uint64_t)ptr + g_malloc.mtdata[type]);
 		//ft_strhexout("ptr size = ", size);
 /*
 		next_ptr = ptr + size + g_malloc.mtdata[type];
@@ -67,6 +67,12 @@ static void		*find_ptr(void *pool, void *to_find, int type)
 		//if (size != 0)
 		//	size = (size ^ g_malloc.mask[type]) & IGNORE_FIRST;
 	}
+	if ((uint64_t)(ptr + g_malloc.mtdata[type]) == (uint64_t)to_find)
+	{
+	//	ft_strhexout("trouve : ", (uint64_t)to_find);
+		return (to_find);
+	}
+	//ft_putchar('\n');
 	return (NULL);
 }
 
@@ -80,15 +86,24 @@ void				*find_pool(uint8_t *to_find, uint8_t **old, int type)
 	pool = g_malloc.ptr[type];
 	if (pool == 0x0)
 		return (NULL);
-	//ft_strhexout("pool = ", (uint64_t)pool);
-	ft_putstr("alo ?\n");
+//	ft_strhexout("pool = ", (uint64_t)pool);
+//	ft_strhexout("tf   = ", (uint64_t)to_find);
+	//ft_putstr("alo ?\n");
+//	if (type == LARGE)
+//		ft_putstr("A la bataille\n");
 	res = *((uint64_t*)(pool + g_malloc.bytesz[type]));
+//	ft_strhexout("Res = ", res);
 	while (res != 0)
 	{
-		ft_putstr("MDR\n");
-		if (find_ptr(pool, to_find, type) != NULL)
+//		ft_putstr("MDR\n");
+		if (type != LARGE && find_ptr(pool, to_find, type) != NULL)
 		{
-			ft_strhexout("dans find_pool pool = ", (uint64_t)pool);
+	//		ft_strhexout("dans find_pool pool = ", (uint64_t)pool);
+			return (pool);
+		}
+		if (type == LARGE && to_find == pool + HEADER_LARGE)
+		{
+//			ft_putstr("Viva la vida\n");
 			return (pool);
 		}
 		/*
@@ -110,9 +125,14 @@ void				*find_pool(uint8_t *to_find, uint8_t **old, int type)
 		res = *((uint64_t*)(pool + g_malloc.bytesz[type]));
 		//ft_strhexout("next = ", res);
 	}
-	if (find_ptr(pool, to_find, type) != NULL)
+	if (type != LARGE && find_ptr(pool, to_find, type) != NULL)
 	{
-		ft_strhexout("cheh dans find_pool pool = ", (uint64_t)pool);
+	//	ft_strhexout("cheh dans find_pool pool = ", (uint64_t)pool);
+		return (pool);
+	}
+	if (type == LARGE && to_find == pool + HEADER_LARGE)
+	{
+//		ft_putstr("Viva la cochonade\n");
 		return (pool);
 	}
 	/*if ((pool = (uint64_t*)find_ptr(pool, to_find, type)) != 0)
@@ -141,25 +161,25 @@ void				free(void *ptr)
 	old_pool = NULL;
 	if ((uint64_t)ptr == 0)
 		return ;
-	ft_strhexout("free ptr : ", (uint64_t)ptr);
+	//ft_strhexout("free ptr : ", (uint64_t)ptr);
 	while (type < NB_AREA)
 	{
 		if (type == LARGE)
 		{
 			if (free_large(ptr) == 1)
-				ft_putstr("Free large sucessed\n");
+				;//ft_putstr("Free large sucessed\n");
 		}
 		else if ((pool = find_pool(ptr, &old_pool, type)) != NULL)
 		{
-			ft_strhexout("on free ptr : ", (uint64_t)ptr);
-			ft_strhexout("old pool = ", (uint64_t)old_pool);
+			//ft_strhexout("on free ptr : ", (uint64_t)ptr);
+			//ft_strhexout("old pool = ", (uint64_t)old_pool);
 			free_zone(pool, old_pool, ptr - g_malloc.mtdata[type], type);
 			break ;
 		}
 		type++;
 	}
-	if ((uint64_t)ptr != 0)
-		ft_putstr("fin\n\n");
+	//if ((uint64_t)ptr != 0)
+	//	ft_putstr("fin\n\n");
 }
 /*
 void				free(void *ptr)

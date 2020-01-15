@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/15 12:01:04 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/15 15:02:46 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int					get_type(size_t size);
 */
 void				free(void *ptr);
 int					get_type_mtdata(uint8_t *ptr);
+void				*find_pool(uint8_t *to_find, uint8_t **old, int type);
 
 /*
 **		free_large.c
@@ -103,7 +104,7 @@ void				show_alloc_mem(void);
 */
 void				release_large(uint8_t *to_release, uint64_t size, \
 		void *ptr, uint64_t next_addr);
-uint64_t			free_zone(uint8_t *pool, void *ptr, int type);
+uint64_t			free_zone(uint8_t *pool, uint8_t *old, void *ptr, int type);
 
 /*
 **		realloc.c

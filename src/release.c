@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 16:44:55 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/15 11:56:45 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/15 14:20:54 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,40 @@ int				check_for_release(void *pool, int type)
 	return (1);
 }
 
-uint64_t		free_zone(uint8_t *old_pool, void *to_free, int type)
+uint64_t		free_zone(uint8_t *pool, uint8_t *old, void *to_free, int type)
 {
-	uint8_t		*pool;
-	//uint16_t	size;
+//	uint8_t		*pool;
+	uint16_t	size;
 	uint64_t	next_pool;
 
-	if (old_pool == NULL)
-		pool = g_malloc.ptr[type];
-	else
-		pool = (uint8_t*)(*((uint64_t*)(old_pool + SIZE_AREA)));
+//	if (old_pool == NULL)
+//		pool = g_malloc.ptr[type];
+//	else
+//		pool = (uint8_t*)(*((uint64_t*)(old_pool + SIZE_AREA)));
+	ft_strhexout("dams free zone pool = ", (uint64_t)pool);
 	if ((*((uint16_t *)to_free) & FREE_MASK) == FREE_MASK)
 		return (1);
-	//size = *((uint16_t *)to_free) & SIZE_MASK;
+	ft_strhexout("on veux free addr : ", (uint64_t)to_free);
+	size = *((uint16_t *)to_free) & SIZE_MASK;
+	ft_strhexout("Size = ", size);
 	next_pool = *((uint64_t *)(pool + SIZE_AREA));
 	*((uint16_t*)(to_free)) |= FREE_MASK;
+	ft_strhexout("Size apres= ", size);
+	size = *((uint16_t *)to_free);
 	if (check_for_release(pool, type) == 0)
 	{
-		//size = *((uint16_t *)to_free) & SIZE_MASK;
 		return (1);
 	}
-	if (old_pool == NULL)
+	if (old == NULL)
+	{
 		g_malloc.ptr[type] = (uint8_t*)next_pool;
+		ft_strhexout("New ptr = ", (uint64_t)g_malloc.ptr[type]);
+	}
 	else
-		*((uint64_t*)(old_pool + SIZE_AREA)) = next_pool;
+	{
+		ft_strhexout("old_pool next = ", *((uint64_t*)(old + SIZE_AREA)));
+		*((uint64_t*)(old + SIZE_AREA)) = next_pool;
+		ft_strhexout("now = ", *((uint64_t*)(old + SIZE_AREA)));
+	}
 	return ((uint64_t)pool);
 }

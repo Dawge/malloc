@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 18:54:18 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/15 12:00:43 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/15 15:21:42 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static void		*handle_realloc(void *ptr, size_t size, int type, int ptr_type)
 
 	if (type == LARGE)
 	{
+	//	ft_putstr("realloc large\n");
 		free(ptr);
 		return (malloc(size));
 	}
@@ -101,6 +102,7 @@ static void		*handle_realloc(void *ptr, size_t size, int type, int ptr_type)
 	}
 	else
 	{
+	//	ft_putstr("Fin realloc3\n\n");
 	//	ft_putstr("Apres le probleme, c'est les autres\n");
 		new_ptr = malloc(size);
 		cpy_data(new_ptr, ptr, type, ptr_type);
@@ -114,12 +116,24 @@ void			*realloc(void *ptr, size_t size)
 {
 	int			type;
 	int			ptr_type;
+	//uint8_t		*old;
 
-//	ft_strhexout("salut realloc : ", (uint64_t)ptr);
-//	ft_strhexout("avec une size de : ", size);
+	type = 0;
+	ptr_type = 0;
+	ft_strhexout("salut realloc : ", (uint64_t)ptr);
+	ft_strhexout("avec une size de : ", size);
 	if (ptr == NULL)
-		return (malloc(size));
+		return (malloc(size));/*
+	while (ptr_type < NB_AREA)
+	{
+		if (find_pool(ptr, &old, ptr_type) != NULL)
+			break;
+		ptr_type++;
+	}
+	ft_strhexout("birb : ", type);
+	if (ptr_type == NB_AREA)
+		return (NULL);*/
 	type = get_type(size);
-	ptr_type = get_type_mtdata(ptr);
+	//ptr_type = get_type_mtdata(ptr);
 	return (handle_realloc(ptr, size, type, ptr_type));
 }

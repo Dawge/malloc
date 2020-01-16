@@ -6,7 +6,7 @@
 #    By: rostroh <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/17 11:17:25 by rostroh           #+#    #+#              #
-#    Updated: 2020/01/15 11:57:57 by rostroh          ###   ########.fr        #
+#    Updated: 2020/01/16 14:25:46 by rostroh          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,10 @@ INC_DIR = ./include
 
 OBJS = $(OBJ:%=$(OBJ_DIR)/%)
 
+INC = malloc.h
+
+HEAD = $(INC_DIR)/$(INC)
+
 LIBFT = libft.a
 LIB_DIR = ./libft
 LFT = $(LIB_DIR)/$(LIBFT)
@@ -45,10 +49,10 @@ all:
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	gcc $(FLG) -I $(INC_DIR) -o $@ -c -fPIC $<
-	@echo "fin de compilation"
+
+$(OBJS): $(HEAD)
 
 $(NAME): $(OBJS)
-	@echo "creat lib"
 	$(CC) $(FLG) $(OBJS) $(LFT) -shared -o $@ $(LIB)
 	ln -fs $(NAME) libft_malloc.so
 

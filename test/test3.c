@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 18:55:43 by rostroh           #+#    #+#             */
-/*   Updated: 2019/12/15 19:34:47 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:12:01 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			main()
 	addr1 = (char *)malloc(16 * M);
 	strcpy(addr1, "bonjour\n");
 	print(addr1);
-	addr3 = (char *)malloc(16 * M);
+	//addr3 = (char *)malloc(16 * M);
 	addr3 = realloc(addr1, 128 * M);
 	addr3[127 * M] = 42;
 	print(addr3);

@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 18:54:18 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/16 11:50:42 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:29:40 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,6 @@ void			*realloc(void *ptr, size_t size)
 		return (NULL);
 	}
 	type = get_type(size);
-	ptr_type = get_type_mtdata(ptr);
+	//ptr_type = get_type_mtdata(ptr);
 	return (handle_realloc(ptr, size, type, ptr_type));
 }

@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/16 14:30:33 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:07:20 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,20 @@ typedef struct		s_malloc
 t_malloc			g_malloc;
 
 /*
-**		malloc.c
+**		area.c
 */
-void				*malloc(size_t size);
-int					get_type(size_t size);
+void				*handle(size_t size, int type);
+
+/*
+**		creat_area.c
+*/
+void				*creat_area(size_t size, int type);
+
+/*
+**		enlarge.c
+*/
+int					check_enlarge(uint8_t *ptr, size_t size, int type, \
+		int ptr_type);
 
 /*
 **		free.c
@@ -80,22 +90,18 @@ void				*find_pool(uint8_t *to_find, uint8_t **old, int type);
 /*
 **		free_large.c
 */
-int					free_large(uint8_t *ptr);
+void				free_large(uint8_t *ptr);
 
 /*
-**		area.c
+**		malloc.c
 */
-void				*handle(size_t size, int type);
+void				*malloc(size_t size);
+int					get_type(size_t size);
 
 /*
-**		creat_area.c
+**		realloc.c
 */
-void				*creat_area(size_t size, int type);
-
-/*
-**		show_alloc_mem.c
-*/
-void				show_alloc_mem(void);
+void				*realloc(void *ptr, size_t size);
 
 /*
 **		release.c
@@ -105,9 +111,9 @@ void				release_large(uint8_t *to_release, uint64_t size, \
 uint64_t			free_zone(uint8_t *pool, uint8_t *old, void *ptr, int type);
 
 /*
-**		realloc.c
+**		show_alloc_mem.c
 */
-void				*realloc(void *ptr, size_t size);
+void				show_alloc_mem(void);
 
 /*
 **		tools.c

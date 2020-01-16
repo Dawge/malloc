@@ -6,7 +6,7 @@
 #    By: rostroh <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/17 11:17:25 by rostroh           #+#    #+#              #
-#    Updated: 2020/01/16 14:25:46 by rostroh          ###   ########.fr        #
+#    Updated: 2020/01/16 15:13:52 by rostroh          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ endif
 NAME = libft_malloc$(HOSTTYPE).so
 
 SRC = malloc.c area.c creat_area.c tools.c free.c release.c realloc.c \
-	  show_alloc_mem.c free_large.c
+	  show_alloc_mem.c free_large.c enlarge.c
 
 OBJ = $(SRC:.c=.o)
 

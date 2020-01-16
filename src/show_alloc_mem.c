@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 18:18:40 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/13 21:01:46 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:52:09 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void			print_addr(uint8_t *ptr, uint64_t size)
 static void			show_pool(uint8_t *ptr, int type)
 {
 	uint16_t		allocsz;
-	
+
 	if (type == LARGE)
 		print_addr(ptr, *(uint64_t*)ptr);
 	else

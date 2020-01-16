@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:48:08 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/13 21:01:42 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:51:35 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,6 @@ void			ft_printaddr(uint8_t *ptr, int type)
 	else
 	{
 		ptrsz = *((uint16_t*)(ptr - META_DATA)) & SIZE_MASK;
-//		ft_strhexout("Size before : ", ptrsz);
-//		ft_strhexout("Mask = ", g_malloc.mask[type]);
-		//ptrsz = *((uint16_t*)(ptr - META_DATA)) ^ g_malloc.mask[type];
 		ft_strhexout("Size : ", ptrsz);
 		ft_puthex((uint64_t)ptr);
 		ft_strhexout(" - ", (uint64_t)(ptr + ptrsz));

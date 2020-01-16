@@ -6,13 +6,32 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 11:01:42 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/16 13:55:43 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:00:04 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-int				free_large(uint8_t *ptr)
+static void		verbose_large(int size)
+{
+	if ((VERBOSE & 0x01) == 0x01)
+	{
+		g_malloc.nb_page -= size;
+		ft_strintout("Page reclaims : ", g_malloc.nb_page);
+	}
+}
+
+static void		free_first(uint8_t *res)
+{
+	uint64_t	size;
+
+	g_malloc.ptr[LARGE] = (void*)(*(uint64_t*)(res + SIZE_LARGE));
+	size = (uint64_t)(*res) / g_malloc.pagesz + 1;
+	munmap(res, size * g_malloc.pagesz);
+	verbose_large(size);
+}
+
+void			free_large(uint8_t *ptr)
 {
 	uint8_t		*res;
 	uint8_t		*old;
@@ -21,25 +40,12 @@ int				free_large(uint8_t *ptr)
 
 	res = g_malloc.ptr[LARGE];
 	if (res == NULL)
-		return (0);
+		return ;
 	if (ptr >= res && res + HEADER_LARGE == ptr)
-	{
-		g_malloc.ptr[LARGE] = (void*)(*(uint64_t*)(res + SIZE_LARGE));
-		size = (uint64_t)(*res) / g_malloc.pagesz + 1;
-		munmap(res, size * g_malloc.pagesz);
-		if (VERBOSE == 1)
-		{
-			g_malloc.nb_page -= size;
-			//ft_strintout("Page reclaims : ", g_malloc.nb_page);
-		}
-		return (1);
-	}
-	//ft_putstr("MDR\n");
+		return (free_first(res));
 	next_addr = *(uint64_t*)(res + SIZE_LARGE);
-	//ft_putstr("Chaussette\n");
 	while (next_addr != 0)
 	{
-		//ft_putstr("MDR\n");
 		old = res;
 		res = (uint8_t*)next_addr;
 		next_addr = *(uint64_t*)(res + SIZE_LARGE);
@@ -48,16 +54,7 @@ int				free_large(uint8_t *ptr)
 			*(uint64_t*)(old + SIZE_LARGE) = next_addr;
 			size = (uint64_t)(*res) / 16 + 1;
 			munmap(res, size);
-			if ((VERBOSE & 0x01) == 0x01)
-			{
-				g_malloc.nb_page -= size;
-				ft_strintout("Page reclaims : ", g_malloc.nb_page);
-			}
-			return (1);
+			verbose_large(size);
 		}
 	}
-	//ft_putstr("Plop\n");
-	return (0);
 }
-
-

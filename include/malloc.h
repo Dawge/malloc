@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:59:11 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/15 15:02:46 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 11:12:42 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 
 # define BIG_ADDR 0x7F7F00000000
 
-# define VERBOSE 0
+# define VERBOSE 1
 # define DUMP 0
 
 typedef struct		s_malloc

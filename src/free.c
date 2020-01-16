@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:25:23 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/15 16:12:45 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:56:27 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,8 @@ void				free(void *ptr)
 	old_pool = NULL;
 	if ((uint64_t)ptr == 0)
 		return ;
-	//ft_strhexout("free ptr : ", (uint64_t)ptr);
+	if ((VERBOSE & 0x02) == 0x02)
+		ft_strhexout("free ptr : ", (uint64_t)ptr);
 	while (type < NB_AREA)
 	{
 		if (type == LARGE)
@@ -179,7 +180,6 @@ void				free(void *ptr)
 		type++;
 	}
 	//if ((uint64_t)ptr != 0)
-	//	ft_putstr("fin\n\n");
 }
 /*
 void				free(void *ptr)

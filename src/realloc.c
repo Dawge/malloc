@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 18:54:18 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/15 16:42:56 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 11:50:42 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void		*handle_realloc(void *ptr, size_t size, int type, int ptr_type)
 
 	if (type == LARGE)
 	{
-		ft_putstr("realloc large\n");
+		//ft_putstr("realloc large\n");
 		new_ptr = malloc(size);
 		cpy_data(new_ptr, ptr, type, ptr_type);
 		free(ptr);
@@ -97,14 +97,14 @@ static void		*handle_realloc(void *ptr, size_t size, int type, int ptr_type)
 	if (check_size(ptr, size, type, ptr_type) == 1)
 	{
 	//	ft_putstr("Fin realloc1\n\n");
-		ft_putstr("Blanc sur rouge, rien ne bouge\n");
+		//ft_putstr("Blanc sur rouge, rien ne bouge\n");
 	//	ft_putchar('\n');
 		return (ptr);
 	}
 	else if (type == ptr_type && check_enlarge(ptr, size, type, ptr_type) == 1)
 	{
 	//	ft_putstr("Fin realloc2\n\n");
-		ft_putstr("Si on se sert, il y a de la place pour tout le monde\n");
+		//ft_putstr("Si on se sert, il y a de la place pour tout le monde\n");
 //		ft_strhexout("Ici ca devrait aller\n", *(uint16_t*)(ptr - g_malloc.mtdata[type]));
 	//	ft_putchar('\n');
 		return (ptr);
@@ -112,7 +112,7 @@ static void		*handle_realloc(void *ptr, size_t size, int type, int ptr_type)
 	else
 	{
 	//	ft_putstr("Fin realloc3\n\n");
-		ft_putstr("Apres le probleme, c'est les autres\n");
+		//ft_putstr("Apres le probleme, c'est les autres\n");
 		new_ptr = malloc(size);
 		cpy_data(new_ptr, ptr, type, ptr_type);
 		free(ptr);
@@ -130,8 +130,8 @@ void			*realloc(void *ptr, size_t size)
 
 	type = 0;
 	ptr_type = 0;
-	ft_strhexout("\nsalut realloc : ", (uint64_t)ptr);
-	ft_strhexout("avec une size de : ", size);
+	//ft_strhexout("\nsalut realloc : ", (uint64_t)ptr);
+	//ft_strhexout("avec une size de : ", size);
 	if (ptr == NULL)
 	{
 	//	ft_putchar('\n');

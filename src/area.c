@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:44:19 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/15 13:11:20 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:54:05 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void				*handle(size_t size, int t)
 	int			full;
 	int			freed;
 	uint8_t		*ptr;
+	uint8_t		*cpy;
 	uint64_t	res;
 
 	full = 0;
@@ -88,15 +89,17 @@ void				*handle(size_t size, int t)
 		return (g_malloc.ptr[t] + g_malloc.hdrsz[t] + g_malloc.mtdata[t]);
 	}
 	ptr = go_last_area(t, size, &full);
+	//ft_strhexout("Size in pool : ", *((uint32_t*)(ptr)));
 	//ft_strhexout("Pool : ", (uint64_t)ptr);
 	if (full == 0)
 	{
-		*((uint32_t*)(ptr)) += (uint32_t)size + META_DATA;
+		cpy = ptr;
 		ptr = pars_block(ptr, t, size, &freed);
 		if (freed == 0)
+		{
 			*((uint16_t*)(ptr)) = size | g_malloc.mask[t];
-		else
-			;//ft_strhexout("Cheh : ", (*((uint16_t*)(ptr)) & SIZE_MASK));
+			*((uint32_t*)(cpy)) += (uint32_t)size + META_DATA;
+		}
 		return (ptr + g_malloc.mtdata[t]);
 	}
 	else

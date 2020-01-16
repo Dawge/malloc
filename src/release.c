@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 16:44:55 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/15 15:42:42 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:55:18 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int				check_for_release(void *pool, int type)
 	ft_bzero(pool, size_area);
 	if (munmap(pool, size_area) == -1)
 		return (0);
-	if (VERBOSE == 1)
+	if ((VERBOSE & 0x01) == 0x01)
 	{
 		ft_strhexout("Release addr : ", (uint64_t)pool);
 		ft_strhexout("with a size of : ", size_area);

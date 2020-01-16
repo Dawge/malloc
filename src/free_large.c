@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 11:01:42 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/15 11:02:02 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:55:43 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int				free_large(uint8_t *ptr)
 			*(uint64_t*)(old + SIZE_LARGE) = next_addr;
 			size = (uint64_t)(*res) / 16 + 1;
 			munmap(res, size);
-			if (VERBOSE == 1)
+			if ((VERBOSE & 0x01) == 0x01)
 			{
 				g_malloc.nb_page -= size;
 				ft_strintout("Page reclaims : ", g_malloc.nb_page);

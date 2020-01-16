@@ -6,7 +6,7 @@
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:17:28 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/13 21:02:10 by rostroh          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:54:26 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void				*creat_area(size_t size, int type)
 	ptr = mmap(0, size_alloc, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, \
 			-1, 0);
 	ft_bzero(ptr, size_alloc);
-	if (VERBOSE == 1)
+	if ((VERBOSE & 0x01) == 0x01)
 	{
 		ft_strhexout("Creat new area : ", (uint64_t)ptr);
 		ft_strhexout("with a size of : ", size_alloc);

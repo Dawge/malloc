@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_realloc.c                                     :+:      :+:    :+:   */
+/*   test_munmap.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rostroh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 15:32:22 by rostroh           #+#    #+#             */
-/*   Updated: 2020/01/16 11:54:18 by rostroh          ###   ########.fr       */
+/*   Created: 2020/01/16 11:30:28 by rostroh           #+#    #+#             */
+/*   Updated: 2020/01/16 12:52:47 by rostroh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <string.h>
+#include "../libft/include/libft.h"
 
-int				main(void)
+int			main(void)
 {
-	void	*ptr;
+	int		i;
+	char	*addr;
 
-	ptr = malloc(0x4000);
-	ptr = realloc(ptr, 0x8000);
+	i = 0;
+	while (i < 10)
+	{
+		ft_putstr("ptr nb : ");
+		ft_putnbr(i);
+		ft_putchar('\n');
+		addr = malloc(0x400);
+		free(addr);
+		i++;
+	}
 	return (0);
 }
